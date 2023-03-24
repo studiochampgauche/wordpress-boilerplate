@@ -1,8 +1,8 @@
 /*!
- * ScrollSmoother 3.11.4
+ * ScrollSmoother 3.11.5
  * https://greensock.com
  *
- * @license Copyright 2008-2022, GreenSock. All rights reserved.
+ * @license Copyright 2008-2023, GreenSock. All rights reserved.
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
@@ -57,7 +57,6 @@ export class ScrollSmoother {
 		let {smoothTouch, onUpdate, onStop, smooth, onFocusIn, normalizeScroll, wholePixels} = vars,
 			content, wrapper, height, mainST, effects, sections, intervalID, wrapperCSS, contentCSS, paused, pausedNormalizer, recordedRefreshScroll, recordedRefreshScrub,
 			self = this,
-			resizeObserver = typeof(ResizeObserver) !== "undefined" && vars.autoResize !== false && new ResizeObserver(() => ScrollTrigger.isRefreshing || _onResizeDelayedCall.restart(true)),
 			effectsPrefix = vars.effectsPrefix || "",
 			scrollFunc = ScrollTrigger.getScrollFunc(_win),
 			smoothDuration = ScrollTrigger.isTouch === 1 ? (smoothTouch === true ? 0.8 : parseFloat(smoothTouch) || 0) : (smooth === 0 || smooth === false) ? 0 : parseFloat(smooth) || 0.8,
@@ -91,7 +90,7 @@ export class ScrollSmoother {
 					}
 					delta = y - currentY;
 					currentY = y;
-					ScrollTrigger.isUpdating || ScrollTrigger.update();
+					ScrollTrigger.isUpdating || ScrollSmoother.isRefreshing || ScrollTrigger.update(); // note: if we allowed an update() when in the middle of a refresh() it could render all the other ScrollTriggers and inside the update(), _refreshing would be true thus scrubs would jump instantly, but then on the very next update they'd continue from there. Basically this allowed update() to be called on OTHER ScrollTriggers during the refresh() of the mainST which could cause some complications. See https://greensock.com/forums/topic/35536-smoothscroller-ignoremobileresize-for-non-touch-devices
 				}
 			},
 			scrollTop = function(value) {
@@ -100,11 +99,18 @@ export class ScrollSmoother {
 					scroll.y = -value; // don't use currentY because we must accurately track the delta variable (in render() method)
 					isProxyScrolling = true; // otherwise, if snapping was applied (or anything that attempted to SET the scroll proxy's scroll position), we'd set the scroll here which would then (on the next tick) update the content tween/ScrollTrigger which would try to smoothly animate to that new value, thus the scrub tween would impede the progress. So we use this flag to respond accordingly in the ScrollTrigger's onUpdate and effectively force the scrub to its end immediately.
 					paused ? (currentY = -value) : render(-value);
-					ScrollTrigger.isRefreshing ? mainST.update() : scrollFunc(value); // during a refresh, we revert all scrollers to 0 and then put them back. We shouldn't force the window to that value too during the refresh.
+					ScrollTrigger.isRefreshing ? mainST.update() : scrollFunc(value / speed); // during a refresh, we revert all scrollers to 0 and then put them back. We shouldn't force the window to that value too during the refresh.
 					return this;
 				}
 				return -currentY;
 			},
+			resizeObserver = typeof(ResizeObserver) !== "undefined" && vars.autoResize !== false && new ResizeObserver(() => {
+				if (!ScrollTrigger.isRefreshing) {
+					let max = ScrollTrigger.maxScroll(wrapper);
+					max < -currentY && scrollTop(max) // if the user scrolled down to the bottom, for example, and then the page resizes smaller, we should adjust things accordingly right away so that the scroll position isn't past the very end.
+					_onResizeDelayedCall.restart(true);
+				}
+			}),
 			lastFocusElement, // if the user clicks a button that scrolls the page, for example, then unfocuses the window and comes back and activates the window/tab again, it'll want to focus back on that same button element but in that case we should skip it. Only jump there when a new element gets focus, like tabbing for accessibility.
 			_onFocusIn = e => { // when the focus changes, make sure that element is on-screen
 				wrapper.scrollTop = 0;
@@ -294,7 +300,7 @@ export class ScrollSmoother {
 				st = ScrollTrigger.create({trigger: target, start: position || "top top"}),
 				y;
 			effects && adjustParallaxPosition([st], true);
-			y = st.start;
+			y = st.start / speed;
 			st.kill(false);
 			target.style.cssText = cssText;
 			gsap.core.getCache(target).uncache = 1;
@@ -416,6 +422,7 @@ export class ScrollSmoother {
 				}
 			}),
 			onRefreshInit: self => {
+				ScrollSmoother.isRefreshing = true;
 				if (effects) {
 					let pins = ScrollTrigger.getAll().filter(st => !!st.pin);
 					effects.forEach(st => {
@@ -435,23 +442,24 @@ export class ScrollSmoother {
 				recordedRefreshScrub = scrub && scrub._end > scrub._dp._time; // don't use scrub.progress() < 1 because we may have called killScrub() recently in which case it'll report progress() as 1 when we were actually in the middle of a scrub. That's why we tap into the _end instead.
 				recordedRefreshScroll = currentY;
 				scroll.y = 0;
-				if (smoothDuration) { // Safari 16 has a major bug - if you set wrapper.scrollTop to 0 (even if it's already 0), it blocks the whole page from scrolling page non-scrollable! See https://bugs.webkit.org/show_bug.cgi?id=245300 and https://codepen.io/GreenSock/pen/YzLZVOz An alternate is to set position to absolute and then back to fixed after setting scrollTop, but that's less performant.
-					wrapper.style.pointerEvents = "none"; // Safari 16 has a major bug - if you set wrapper.scrollTop to 0 (even if it's already 0), it makes the entire page non-scrollable! The only workaround I know of is to change to position absolute and then back again. See https://bugs.webkit.org/show_bug.cgi?id=245300 and https://codepen.io/GreenSock/pen/YzLZVOz
+				if (smoothDuration) {
+					ScrollTrigger.isTouch === 1 && (wrapper.style.position = "absolute"); // Safari 16 has a major bug - if you set wrapper.scrollTop to 0 (even if it's already 0), it blocks the whole page from scrolling page non-scrollable! See https://bugs.webkit.org/show_bug.cgi?id=245300 and https://codepen.io/GreenSock/pen/YzLZVOz. Originally we set pointer-events: none on the wrapper temporarily, and set it back to all after setting scrollTop to 0, but that could cause mouseenter/mouseleave/etc. events to fire too, so we opted to set the position to absolute and then back to fixed after setting scrollTop.
 					wrapper.scrollTop = 0; // set wrapper.scrollTop to 0 because in some very rare situations, the browser will auto-set that, like if there's a hash in the link or changing focus to an off-screen input
-					setTimeout(() => wrapper.style.removeProperty("pointer-events"), 50);
+					ScrollTrigger.isTouch === 1 && (wrapper.style.position = "fixed");
 				}
 			},
 			onRefresh: self => {
 				self.animation.invalidate(); // because pinnedContainers may have been found in ScrollTrigger's _refreshAll() that extend the height. Without this, it may prevent the user from being able to scroll all the way down.
 				self.setPositions(self.start, refreshHeight() / speed);
 				recordedRefreshScrub || killScrub(self);
-				scroll.y = -scrollFunc(); // in 3.11.1, we shifted to forcing the scroll position to 0 during the entire refreshAll() in ScrollTrigger and then restored the scroll position AFTER everything had been updated, thus we should always make these adjustments AFTER a full refresh rather than putting it in the onRefresh() of the individual mainST ScrollTrigger which would fire before the scroll position was restored.
+				scroll.y = -scrollFunc() * speed; // in 3.11.1, we shifted to forcing the scroll position to 0 during the entire refreshAll() in ScrollTrigger and then restored the scroll position AFTER everything had been updated, thus we should always make these adjustments AFTER a full refresh rather than putting it in the onRefresh() of the individual mainST ScrollTrigger which would fire before the scroll position was restored.
 				render(scroll.y);
-				startupPhase || self.animation.progress(gsap.utils.clamp(0, 1, recordedRefreshScroll / -self.end));
+				startupPhase || self.animation.progress(gsap.utils.clamp(0, 1, recordedRefreshScroll / speed / -self.end));
 				if (recordedRefreshScrub) { // we need to trigger the scrub to happen again
 					self.progress -= 0.001;
 					self.update();
 				}
+				ScrollSmoother.isRefreshing = false;
 			},
 			id: "ScrollSmoother",
 			scroller: _win,
@@ -493,7 +501,7 @@ export class ScrollSmoother {
 				if (!!paused !== value) {
 					if (value) { // pause
 						mainST.getTween() && mainST.getTween().pause();
-						scrollFunc(-currentY);
+						scrollFunc(-currentY / speed);
 						tracker.reset();
 						pausedNormalizer = ScrollTrigger.normalizeScroll();
 						pausedNormalizer && pausedNormalizer.disable(); // otherwise the normalizer would try to scroll the page on things like wheel events.
@@ -510,7 +518,7 @@ export class ScrollSmoother {
 						paused.kill();
 						paused = 0;
 						pausedNormalizer && pausedNormalizer.enable();
-						mainST.progress = (-currentY - mainST.start) / (mainST.end - mainST.start);
+						mainST.progress = (-currentY / speed - mainST.start) / (mainST.end - mainST.start);
 						killScrub(mainST);
 					}
 				}
@@ -600,7 +608,7 @@ export class ScrollSmoother {
 
 }
 
-ScrollSmoother.version = "3.11.4";
+ScrollSmoother.version = "3.11.5";
 ScrollSmoother.create = vars => (_mainInstance && vars && _mainInstance.content() === _toArray(vars.content)[0]) ? _mainInstance : new ScrollSmoother(vars);
 ScrollSmoother.get = () => _mainInstance;
 

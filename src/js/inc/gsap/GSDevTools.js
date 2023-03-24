@@ -1,8 +1,8 @@
 /*!
- * GSDevTools 3.11.4
+ * GSDevTools 3.11.5
  * https://greensock.com
  *
- * @license Copyright 2008-2022, GreenSock. All rights reserved.
+ * @license Copyright 2008-2023, GreenSock. All rights reserved.
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
@@ -11,7 +11,7 @@
 
 import { Draggable } from "./Draggable.js";
 
-let gsap, _coreInitted, _doc, _docEl, _win, _recordedRoot, Animation, _rootTween, _rootInstance, _rootIsDirty, _keyboardInstance, _globalTimeline, _independentRoot, _delayedCall,
+let gsap, _coreInitted, _doc, _docEl, _win, _recordedRoot, Animation, _rootTween, _rootInstance, _rootIsDirty, _keyboardInstance, _globalTimeline, _independentRoot, _delayedCall, _context,
 	_recording = true,
 	_startupPhase = true, //for the first 2 seconds, we don't record any zero-duration tweens because they're typically just setup stuff and/or the "from" or "startAt" tweens. In version 1.20.3 we started flagging those with data:"isStart"|"isFromStart" but this logic helps GSDevTools work with older versions too.
 	_globalStartTime = 0,
@@ -285,6 +285,7 @@ let gsap, _coreInitted, _doc, _docEl, _win, _recordedRoot, Animation, _rootTween
 				_doc = document;
 				_docEl = _doc.documentElement;
 				_win = window;
+				_context = gsap.core.context || function() {};
 				gsap.registerPlugin(Draggable);
 				_globalTimeline = gsap.globalTimeline;
 				_globalTimeline._sort = true;
@@ -1091,7 +1092,7 @@ let gsap, _coreInitted, _doc, _docEl, _win, _recordedRoot, Animation, _rootTween
 			}
 		};
 
-		this.kill = () => {
+		this.kill = this.revert = () => {
 			_removeListener(list, "change", onChangeAnimation);
 			_removeListener(list, "mousedown", updateList);
 			_removeListener(playPauseButton, "mousedown", togglePlayPause);
@@ -1150,11 +1151,13 @@ let gsap, _coreInitted, _doc, _docEl, _win, _recordedRoot, Animation, _rootTween
 		this.animation = animation;
 		this.updateList = updateList;
 
+		_context(this);
+
 	}; //if on startup, someone does a timeline.seek(), we need to honor it, so when initialize() is called, it'll check the _recordedRoot._start so that we can use that as an offset. Remember, however, that we call initialize() twice on startup, once after a tick has elapsed just in case someone called GSDevTools.create() before their animation code, so we must record the value (once).
 
 
 
-GSDevTools.version = "3.11.4";
+GSDevTools.version = "3.11.5";
 GSDevTools.globalRecordingTime = 2;
 
 GSDevTools.getById = id => id ? _lookup[id] : _rootInstance;
