@@ -3,9 +3,22 @@ Start theming fast with this repo.
 
 - barba.js Ready
 - GSAP Ready
-- ACF Pro Plugin Ready
+- ACF Pro Plugin included
 - Free Polylang Plugin included
 - Minimal files for three.js and granim.js are included
+- Use our Champ Gauche Helper Plugin:
+	- Manage SEO & favicon
+	- Create Custom Post Type and taxonomies
+	- Maintenance mode in one click
+	- Add menu/theme locations
+	- Add multiple Pages Options
+	- Change Admin Panel Display (optional)
+	- Clean Dashboard (optional)
+	- Enable/disable Gutenberg
+	- Enable/disable Front-end Global Styles
+	- Enable/disable Front-end WP Block Library
+	- Enable/disable Front-end Classic Theme Styles
+
 
 
 # Guide
