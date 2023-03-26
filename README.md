@@ -1,5 +1,5 @@
 # Our WordPress Project
-Start theming fast with this repo.
+Start theming fast with this repo. Create an optimized and compressed project.
 
 - barba.js Ready
 - GSAP Ready
@@ -11,7 +11,7 @@ Start theming fast with this repo.
 	- Create Custom Post Type and taxonomies
 	- Maintenance mode in one click
 	- Add menu/theme locations
-	- Add multiple Pages Options
+	- Add ACF Page Options
 	- Change Admin Panel Display (optional)
 	- Clean Dashboard (optional)
 	- Enable/disable Gutenberg
