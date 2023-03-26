@@ -1,5 +1,5 @@
 # Our WordPress Project
-Start theming and construct plugins fast with this repo.
+Start theming fast with this repo.
 
 - barba.js Ready
 - GSAP Ready
