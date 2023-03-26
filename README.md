@@ -1,3 +1,14 @@
+# Our WordPress Project
+Start theming and construct plugins fast with this repo.
+
+- barba.js Ready
+- GSAP Ready
+- ACF Pro Plugin Ready
+- Free Polylang Plugin included
+- Minimal files for three.js and granim.js are included
+
+
+# Guide
 ***1. Clone the repo and install the Node Modules***
 
 ```
@@ -17,9 +28,6 @@ cd your_project_root_path
 ___
 
 When you add plugins, fonts, images, external css, external scss and external js, you need to rerun the `gulp prod or gulp prod-watch` command.
-
-#### Why?
-For performance, we don't watch in continue some directories considered like massive (or potentially massive in the future).
 
 #### Affected directories:
 - `src > extensions`
