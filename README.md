@@ -1,5 +1,5 @@
 # Our WordPress Project
-Start theming fast with this repo!
+A WordPress Project that allow you start theming super fast.
 
 ## Ready to use
 - Three.js
