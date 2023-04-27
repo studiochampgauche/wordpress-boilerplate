@@ -134,10 +134,7 @@ class PLL_Admin_Model extends PLL_Model {
 		}
 
 		// Delete the string translations
-		$post = wpcom_vip_get_page_by_title( 'polylang_mo_' . $lang->term_id, OBJECT, 'polylang_mo' );
-		if ( $post instanceof WP_Post ) {
-			wp_delete_post( $post->ID );
-		}
+		wp_delete_post( PLL_MO::get_id( $lang ) );
 
 		// Delete domain
 		unset( $this->options['domains'][ $lang->slug ] );
@@ -301,7 +298,7 @@ class PLL_Admin_Model extends PLL_Model {
 		}
 
 		// Validate flag
-		if ( ! empty( $args['flag'] ) && ! file_exists( POLYLANG_DIR . '/flags/' . $args['flag'] . '.png' ) ) {
+		if ( ! empty( $args['flag'] ) && ! is_readable( POLYLANG_DIR . '/flags/' . $args['flag'] . '.png' ) ) {
 			$flag = PLL_Language::get_flag_informations( $args['flag'] );
 
 			if ( ! empty( $flag['url'] ) ) {
