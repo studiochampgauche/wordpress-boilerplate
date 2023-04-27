@@ -1,5 +1,5 @@
 # Our WordPress Project
-Start theming fast with this repo. Create an optimized and compressed project.
+Start theming fast with this repo:
 
 - barba.js Ready
 - GSAP Ready
@@ -42,7 +42,7 @@ ___
 
 When you add plugins, fonts, images, external css/scss/js, you need to rerun the `gulp prod or gulp prod-watch` command.
 
-#### Affected directories:
+#### Concerned directories:
 - `src > extensions`
 - `src > fonts`
 - `src > images`
