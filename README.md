@@ -1,28 +1,16 @@
 # Our WordPress Project
 Start theming fast with this repo:
 
-- barba.js Ready
-- GSAP Ready
-- ACF Pro Plugin included
-- Free Polylang Plugin included
-- three.module.js and granim.js are included
-- Champ Gauche Helper Plugin included:
-	- Manage SEO & favicons
-	- Maintenance mode in one click
-	- Add menu/theme locations
-	- Add ACF Page Options
-	- Change Admin Panel Display (optional)
-	- Clean Dashboard (optional)
-	- Enable/disable Gutenberg
-	- Enable/disable Front-end Global Styles
-	- Enable/disable Front-end WP Block Library
-	- Enable/disable Front-end Classic Theme Styles
-	- Add scripts quickly before/after opened/closed head/body tags
-	- Allow SVG Uploads
+## Ready to use:
+- Three.js
+- Barba.js
+- Granim.js
+- GSAP
+- ACF Pro Plugin
+- Polylang Plugin
+- Champ Gauche Helper Plugin
 
-
-
-# Guide
+## Guide
 ***1. Clone the repo and install the Node Modules***
 
 ```
@@ -39,17 +27,6 @@ cd your_project_root_path
 
 ***5. Activate required `ACF PRO` and `Champ Gauche Helper` plugins***
 
-___
-
-When you add plugins, fonts, images, external css/scss/js, you need to rerun the `gulp prod or gulp prod-watch` command.
-
-#### Concerned directories:
-- `src > extensions`
-- `src > fonts`
-- `src > images`
-- `src > scss > inc`
-- `src > js > inc`
-___
 
 ## Custom Post Types by Champ Gauche Helper Plugin
 This functionality has been removed in version 1.0.1 because ACF has launch this option with ACF 6.1
