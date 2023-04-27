@@ -40,7 +40,7 @@ We have build this plugin arround ACF Pro for fix basic things. Manage quickly:
 - Maintenance Mode
 - ACF Options Pages
 - Gutenberg Presence
-- Basic Styles Presences
+- Basic Styles Presence
 - Source Code Clearance
 - Admin Panel Appearance
 - Scripts before/after opened/closed head/body tags
