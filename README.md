@@ -7,7 +7,7 @@ Start theming fast with this repo:
 - Free Polylang Plugin included
 - three.module.js and granim.js are included
 - Champ Gauche Helper Plugin included:
-	- Manage SEO & favicon
+	- Manage SEO & favicons
 	- Maintenance mode in one click
 	- Add menu/theme locations
 	- Add ACF Page Options
