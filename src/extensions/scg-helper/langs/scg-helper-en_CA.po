@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2023-04-27 11:54-0400\n"
-"PO-Revision-Date: 2023-04-27 13:16-0400\n"
+"PO-Revision-Date: 2023-04-27 13:38-0400\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_CA\n"
@@ -201,3 +201,6 @@ msgstr "Add SEO Module on these Post Types. Page, Post, Terms and Authors has th
 
 msgid "Index"
 msgstr "Index"
+
+msgid "Barre du haut"
+msgstr "Top Bar"

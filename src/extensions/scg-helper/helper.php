@@ -36,7 +36,10 @@ class scg{
 		/*
 		* Remove Admin Bar
 		*/
-		add_filter('show_admin_bar', '__return_false');
+		add_action('init', function(){
+			if(self::field('top_bar') !== 'enable')
+				add_filter('show_admin_bar', '__return_false');
+		});
 
 
 		/*
@@ -1560,6 +1563,34 @@ class scg{
 				'aria-label' => '',
 				'type' => 'select',
 				'instructions' => __('Désactiver cette option si vous voulez utiliser un plugin de SEO.', 'scg-helper'),
+				'required' => 0,
+				'conditional_logic' => 0,
+				'wrapper' => [
+					'width' => '33.3333333333',
+					'class' => '',
+					'id' => '',
+				],
+				'choices' => [
+					'enable' => __('Activer', 'scg-helper'),
+					'disable' => __('Désactiver', 'scg-helper'),
+				],
+				'default_value' => 'enable',
+				'return_format' => '',
+				'multiple' => 0,
+				'allow_null' => 0,
+				'ui' => 0,
+				'ajax' => 0,
+				'placeholder' => ''
+			]);
+
+			acf_add_local_field([
+				'parent' => 'group_637141e2601c7',
+				'key' => 'field_6371508kuhfrbmrt',
+				'label' => __('Barre du haut', 'scg-helper'),
+				'name' => 'top_bar',
+				'aria-label' => '',
+				'type' => 'select',
+				'instructions' => '',
 				'required' => 0,
 				'conditional_logic' => 0,
 				'wrapper' => [
