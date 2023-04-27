@@ -72,17 +72,13 @@ gulp.task('default', function () {
 
     gulp.watch([SRC_PATH + '/wp-config.php'], gulp.series('wp-config'))
 
+    gulp.watch([SRC_PATH + '/extensions/**/*'], gulp.series('extensions'))
+
     gulp.watch([SRC_PATH + '/template/**/*'], gulp.series('template'))
 
-    gulp.watch([
-        SRC_PATH + '/scss/**/*.scss',
-        '!' + SRC_PATH + '/scss/inc/**/*.scss',
-    ], gulp.series('scss'))
+    gulp.watch([SRC_PATH + '/scss/**/*.scss'], gulp.series('scss'))
   
-    gulp.watch([
-        SRC_PATH + '/js/**/*.js',
-        '!' + SRC_PATH + '/js/inc/**/*.js',
-    ], gulp.series('js'))
+    gulp.watch([SRC_PATH + '/js/**/*.js'], gulp.series('js'))
 
 });
 
