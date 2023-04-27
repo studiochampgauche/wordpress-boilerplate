@@ -18,6 +18,7 @@ Start theming fast with this repo:
 	- Enable/disable Front-end WP Block Library
 	- Enable/disable Front-end Classic Theme Styles
 	- Add scripts quickly before/after opened/closed head/body tags
+	- Allow SVG Uploads
 
 
 

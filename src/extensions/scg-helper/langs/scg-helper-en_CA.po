@@ -1,0 +1,203 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2023-04-27 11:54-0400\n"
+"PO-Revision-Date: 2023-04-27 12:57-0400\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_CA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-Poedit-Basepath: .\n"
+
+msgid "SCG"
+msgstr "SCG"
+
+msgid "Images et fichiers"
+msgstr "Images and Files"
+
+msgid "Utilisateurs"
+msgstr "Users"
+
+msgid "Profil"
+msgstr "Profile"
+
+msgid "Menus"
+msgstr "Menus"
+
+msgid "Configurations"
+msgstr "Settings"
+
+msgid "Thème"
+msgstr "Theme"
+
+msgid "Thèmes"
+msgstr "Themes"
+
+msgid "Éditeur"
+msgstr "Editor"
+
+msgid "Extensions"
+msgstr "Plugins"
+
+msgid "ACF"
+msgstr "ACF"
+
+msgid "Importer"
+msgstr "Import"
+
+msgid "Exporter"
+msgstr "Export"
+
+msgid "Gestion du thème"
+msgstr "Theme Management"
+
+msgid "Maintenance"
+msgstr "Maintenance"
+
+msgid "Emplacements de thème"
+msgstr "Theme locations"
+
+msgid "Ajouter un emplacement de thème"
+msgstr "Add Theme Location"
+
+msgid "Nom"
+msgstr "Name"
+
+msgid "Slug"
+msgstr "Slug"
+
+msgid "Pages d'options"
+msgstr "Options Pages"
+
+msgid "Ajouter une page d'options"
+msgstr "Add Options Page"
+
+msgid "Titre de la page"
+msgstr "Page Title"
+
+msgid "Titre du menu"
+msgstr "Menu Title"
+
+msgid "Slug du menu"
+msgstr "Menu Slug"
+
+msgid "Capabilité"
+msgstr "Capability"
+
+msgid "Position"
+msgstr "Position"
+
+msgid "Slug parent"
+msgstr "Parent Slug"
+
+msgid "Icon URL"
+msgstr "Icon URL"
+
+msgid "Redirection"
+msgstr "Redirect"
+
+msgid "ID de la publication"
+msgstr "Post ID"
+
+msgid "Autoload"
+msgstr "Autoload"
+
+msgid "Bouton de mise à jour"
+msgstr "Update Button"
+
+msgid "Mettre à jour"
+msgstr "Update"
+
+msgid "Message lorsque mis à jour"
+msgstr "Update Message"
+
+msgid "Options mises à jour"
+msgstr "Options Updated"
+
+msgid "Après &lt;head&gt;"
+msgstr "After &lt;head&gt;"
+
+msgid "Avant &lt;/head&gt;"
+msgstr "Before &lt;/head&gt;"
+
+msgid "Après &lt;body&gt;"
+msgstr "After &lt;body&gt;"
+
+msgid "Avant &lt;/body&gt;"
+msgstr "Before &lt;/body&gt;"
+
+msgid "Cleaner"
+msgstr "Cleaner"
+
+msgid "Notice"
+msgstr "Notice"
+
+msgid "Vous avez besoin d'enregistrer une fois pour que les configurations fonctionnent."
+msgstr "You need to save a first time to get options working."
+
+msgid "Fonctionne seulement si vous avez configurer &quot;Changer l'apparence du panneau d'admin&quot; sur &quot;oui&quot;"
+msgstr "Work only if you set &quot;Change Admin Panel Display&quot; to &quot;Enable&quot;"
+
+msgid "Changer l'apparence du panneau d'admin"
+msgstr "Change Admin Panel Display"
+
+msgid "Oui"
+msgstr "Yes"
+
+msgid "Non"
+msgstr "No"
+
+msgid "Activer"
+msgstr "Enable"
+
+msgid "Désactiver"
+msgstr "Disable"
+
+msgid "Restreindre l'onglet SCG"
+msgstr "Restrict SCG Tab"
+
+msgid "Nettoyer le tableau de bord"
+msgstr "Clean Dashboard"
+
+msgid "Gutenberg"
+msgstr "Gutenberg"
+
+msgid "Gestion du SEO"
+msgstr "SEO Management"
+
+msgid "Désactiver cette option si vous voulez utiliser un plugin de SEO."
+msgstr "Disable this option if you want use a SEO Plugin."
+
+msgid "Tous les navigateurs et Android (192x192)"
+msgstr "All Browsers and Android (192x192)"
+
+msgid "Globale"
+msgstr "Global"
+
+msgid "Moteurs de recherche"
+msgstr "Search Engines"
+
+msgid "Titre"
+msgstr "Title"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Réseaux sociaux"
+msgstr "Social Networks"
+
+msgid "Image"
+msgstr "Image"
+
+msgid "Types de publication"
+msgstr "Post Types"
+
+msgid "Ajouter le module de SEO sur ces types de publication. Page, Post, les &quot;Terms&quot; et les auteurs ont le module."
+msgstr "Add SEO Module on these Post Types. Page, Post, Terms and Authors has the module."
+
+msgid "Index"
+msgstr "Index"

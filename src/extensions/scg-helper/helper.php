@@ -7,6 +7,7 @@ Author: Studio Champ Gauche
 Author URI: https://champgauche.studio
 Copyright: Studio Champ Gauche
 Text Domain: scg-helper
+Domain Path: /langs
 */
 
 
@@ -23,6 +24,13 @@ class scg{
 
 
 		if(!class_exists('ACF')) return;
+
+		/*
+		* Load Languages
+		*/
+		add_action('init', function(){
+			load_plugin_textdomain('scg-helper', false, basename(__DIR__) . '/langs/');
+		});
 
 
 		/*
@@ -499,8 +507,7 @@ class scg{
 					'href' => home_url(),
 					'target' => '_blank',
 					'meta' => array(
-						'class' => 'goto-website',
-						'title' => __('Visit Website')
+						'class' => 'goto-website'
 					)
 				);
 				$wp_admin_bar->add_node($args);
@@ -511,11 +518,10 @@ class scg{
 				*/
 				$args = array(
 					'id' => 'gest-menus',
-					'title' => __('Menus'),
+					'title' => __('Menus', 'scg-helper'),
 					'href' => $admin_url . 'nav-menus.php',
 					'meta' => array(
-						'class' => 'gest-menus',
-						'title' => __('Menus Management')
+						'class' => 'gest-menus'
 					)
 				);
 				if(current_user_can('edit_theme_options') && !empty(self::field('register_nav_menus')))
@@ -527,11 +533,10 @@ class scg{
 				*/
 				$args = array(
 					'id' => 'gest-files',
-					'title' => __('Images & Files'),
+					'title' => __('Images et fichiers', 'scg-helper'),
 					'href' => $admin_url . 'upload.php',
 					'meta' => array(
-						'class' => 'gest-files',
-						'title' => __('Images & Files Management')
+						'class' => 'gest-files'
 					)
 				);
 				if(current_user_can('upload_files'))
@@ -543,11 +548,10 @@ class scg{
 				*/
 				$args = array(
 					'id' => 'gest-users-list',
-					'title' => __('Users'),
+					'title' => __('Utilisateurs', 'scg-helper'),
 					'href' => $admin_url . 'users.php',
 					'meta' => array(
-						'class' => 'gest-users-list',
-						'title' => __('Manage User List')
+						'class' => 'gest-users-list'
 					)
 				);
 				if(current_user_can('list_users'))
@@ -559,12 +563,11 @@ class scg{
 				*/
 				$args = array(
 					'id' => 'gest-users-profile',
-					'title' => __('Profile'),
+					'title' => __('Profil', 'scg-helper'),
 					'href' => $admin_url . 'profile.php',
 					'parent' => 'gest-users-list',
 					'meta' => array(
-						'class' => 'gest-users-profile',
-						'title' => __('Your Profile')
+						'class' => 'gest-users-profile'
 					)
 				);
 				$wp_admin_bar->add_node($args);
@@ -601,7 +604,7 @@ class scg{
 					*/
 					$args = array(
 						'id' => 'is-scg',
-						'title' => 'SCG',
+						'title' => __('SCG', 'scg-helper'),
 						'meta' => array(
 							'class' => 'is-scg'
 						)
@@ -613,7 +616,7 @@ class scg{
 					*/
 					$args = array(
 						'id' => 'is-scg-general',
-						'title' => __('Configurations'),
+						'title' => __('Configurations', 'scg-helper'),
 						'href' => $admin_url . 'admin.php?page=scg-settings',
 						'parent' => 'is-scg',
 						'meta' => array(
@@ -628,7 +631,7 @@ class scg{
 					*/
 					$args = array(
 						'id' => 'is-scg-themes',
-						'title' => __('Themes'),
+						'title' => __('Thèmes', 'scg-helper'),
 						'href' => $admin_url . 'themes.php',
 						'parent' => 'is-scg',
 						'meta' => array(
@@ -644,7 +647,7 @@ class scg{
 					*/
 					$args = array(
 						'id' => 'is-scg-themes-editor',
-						'title' => __('Editor'),
+						'title' => __('Éditeur', 'scg-helper'),
 						'href' => $admin_url . 'theme-editor.php',
 						'parent' => 'is-scg-themes',
 						'meta' => array(
@@ -660,7 +663,7 @@ class scg{
 					*/
 					$args = array(
 						'id' => 'is-scg-plugins',
-						'title' => __('Plugins'),
+						'title' => __('Extensions', 'scg-helper'),
 						'href' => $admin_url . 'plugins.php',
 						'parent' => 'is-scg',
 						'meta' => array(
@@ -676,7 +679,7 @@ class scg{
 					*/
 					$args = array(
 						'id' => 'is-scg-plugin-editor',
-						'title' => __('Éditeur', 'is-scg-core'),
+						'title' => __('Éditeur', 'scg-helper'),
 						'href' => $admin_url . 'plugin-editor.php',
 						'parent' => 'is-scg-plugins',
 						'meta' => array(
@@ -692,7 +695,7 @@ class scg{
 					*/
 					$args = array(
 						'id' => 'is-scg-acf',
-						'title' => __('ACF'),
+						'title' => __('ACF', 'scg-helper'),
 						'href' => $admin_url . 'edit.php?post_type=acf-field-group',
 						'parent' => 'is-scg',
 						'meta' => array(
@@ -707,7 +710,7 @@ class scg{
 					*/
 					$args = array(
 						'id' => 'is-scg-import',
-						'title' => __('Import'),
+						'title' => __('Importer', 'scg-helper'),
 						'href' => $admin_url . 'import.php',
 						'parent' => 'is-scg',
 						'meta' => array(
@@ -722,7 +725,7 @@ class scg{
 					*/
 					$args = array(
 						'id' => 'is-scg-export',
-						'title' => __('Export'),
+						'title' => __('Exporter', 'scg-helper'),
 						'href' => $admin_url . 'export.php',
 						'parent' => 'is-scg',
 						'meta' => array(
@@ -794,8 +797,8 @@ class scg{
 			* SCG Management
 			*/
 			acf_add_options_page([
-				'page_title'    => __('SCG Management'),
-				'menu_title'    => __('SCG'),
+				'page_title'    => __('Configurations', 'scg-helper'),
+				'menu_title'    => __('SCG', 'scg-helper'),
 				'menu_slug'     => 'scg-settings',
 				'capability'    => 'edit_themes',
 				'redirect'      => false
@@ -806,7 +809,7 @@ class scg{
 			*/
 			acf_add_local_field_group([
 				'key' => 'group_637141e2601c7',
-				'title' => __('Theme Management'),
+				'title' => __('Gestion du thème', 'scg-helper'),
 				'fields' => [],
 				'location' => [
 					[
@@ -831,7 +834,7 @@ class scg{
 			acf_add_local_field([
 				'parent' => 'group_637141e2601c7',
 				'key' => 'field_6371502242c21',
-				'label' => 'Theme',
+				'label' => __('Thème', 'scg-helper'),
 				'name' => '',
 				'aria-label' => '',
 				'type' => 'tab',
@@ -850,7 +853,7 @@ class scg{
 			acf_add_local_field([
 				'parent' => 'group_637141e2601c7',
 				'key' => 'field_637141e24cb06',
-				'label' => 'Maintenance',
+				'label' => __('Maintenance', 'scg-helper'),
 				'name' => 'maintenance',
 				'aria-label' => '',
 				'type' => 'select',
@@ -878,7 +881,7 @@ class scg{
 			acf_add_local_field([
 				'parent' => 'group_637141e2601c7',
 				'key' => 'field_637168726e495',
-				'label' => 'Register Nav Menus',
+				'label' => __('Emplacements de thème', 'scg-helper'),
 				'name' => 'register_nav_menus',
 				'aria-label' => '',
 				'type' => 'repeater',
@@ -895,12 +898,12 @@ class scg{
 				'min' => 0,
 				'max' => 0,
 				'collapsed' => '',
-				'button_label' => 'Add Menu Location',
+				'button_label' => __('Ajouter un emplacement de thème', 'scg-helper'),
 				'rows_per_page' => 20,
 				'sub_fields' => [
 					[
 						'key' => 'field_637168da6e496',
-						'label' => 'Name',
+						'label' => __('Nom', 'scg-helper'),
 						'name' => 'name',
 						'aria-label' => '',
 						'type' => 'text',
@@ -921,7 +924,7 @@ class scg{
 					],
 					[
 						'key' => 'field_637168e56e497',
-						'label' => 'Slug',
+						'label' => __('Slug', 'scg-helper'),
 						'name' => 'slug',
 						'aria-label' => '',
 						'type' => 'text',
@@ -946,7 +949,7 @@ class scg{
 			acf_add_local_field([
 				'parent' => 'group_637141e2601c7',
 				'key' => 'field_6371696a891d2',
-				'label' => 'Register Options Pages',
+				'label' => __('Pages d\'options', 'scg-helper'),
 				'name' => 'register_options_pages',
 				'aria-label' => '',
 				'type' => 'repeater',
@@ -963,12 +966,12 @@ class scg{
 				'min' => 0,
 				'max' => 0,
 				'collapsed' => 'field_6371696a891d3',
-				'button_label' => 'Add Options Page',
+				'button_label' => __('Ajouter une page d\'options', 'scg-helper'),
 				'rows_per_page' => 20,
 				'sub_fields' => [
 					[
 						'key' => 'field_6371696a891d3',
-						'label' => 'Page Title',
+						'label' => __('Titre de la page', 'scg-helper'),
 						'name' => 'page_title',
 						'aria-label' => '',
 						'type' => 'text',
@@ -989,7 +992,7 @@ class scg{
 					],
 					[
 						'key' => 'field_637169a6891d5',
-						'label' => 'Menu Title',
+						'label' => __('Titre du menu', 'scg-helper'),
 						'name' => 'menu_title',
 						'aria-label' => '',
 						'type' => 'text',
@@ -1010,7 +1013,7 @@ class scg{
 					],
 					[
 						'key' => 'field_637169b2891d6',
-						'label' => 'Menu Slug',
+						'label' => __('Slug du menu', 'scg-helper'),
 						'name' => 'menu_slug',
 						'aria-label' => '',
 						'type' => 'text',
@@ -1031,7 +1034,7 @@ class scg{
 					],
 					[
 						'key' => 'field_637169c7891d7',
-						'label' => 'Capability',
+						'label' => __('Capabilité', 'scg-helper'),
 						'name' => 'capability',
 						'aria-label' => '',
 						'type' => 'text',
@@ -1052,7 +1055,7 @@ class scg{
 					],
 					[
 						'key' => 'field_637169d5891d8',
-						'label' => 'Position',
+						'label' => __('Position', 'scg-helper'),
 						'name' => 'position',
 						'aria-label' => '',
 						'type' => 'text',
@@ -1073,7 +1076,7 @@ class scg{
 					],
 					[
 						'key' => 'field_637169e4891d9',
-						'label' => 'Parent Slug',
+						'label' => __('Slug parent', 'scg-helper'),
 						'name' => 'parent_slug',
 						'aria-label' => '',
 						'type' => 'text',
@@ -1094,7 +1097,7 @@ class scg{
 					],
 					[
 						'key' => 'field_637169f9891da',
-						'label' => 'Icon URL',
+						'label' => __('Icon URL', 'scg-helper'),
 						'name' => 'icon_url',
 						'aria-label' => '',
 						'type' => 'text',
@@ -1115,7 +1118,7 @@ class scg{
 					],
 					[
 						'key' => 'field_63716a58891db',
-						'label' => 'Redirect',
+						'label' => __('Redirection', 'scg-helper'),
 						'name' => 'redirect',
 						'aria-label' => '',
 						'type' => 'true_false',
@@ -1136,7 +1139,7 @@ class scg{
 					],
 					[
 						'key' => 'field_63716a8d891dc',
-						'label' => 'Post ID',
+						'label' => __('ID de la publication', 'scg-helper'),
 						'name' => 'post_id',
 						'aria-label' => '',
 						'type' => 'text',
@@ -1157,7 +1160,7 @@ class scg{
 					],
 					[
 						'key' => 'field_63716b1d891dd',
-						'label' => 'Autoload',
+						'label' => __('Autoload', 'scg-helper'),
 						'name' => 'autoload',
 						'aria-label' => '',
 						'type' => 'true_false',
@@ -1178,7 +1181,7 @@ class scg{
 					],
 					[
 						'key' => 'field_63716b41891de',
-						'label' => 'Update Button',
+						'label' => __('Bouton de mise à jour', 'scg-helper'),
 						'name' => 'update_button',
 						'aria-label' => '',
 						'type' => 'text',
@@ -1190,7 +1193,7 @@ class scg{
 							'class' => '',
 							'id' => '',
 						],
-						'default_value' => 'Update',
+						'default_value' => __('Mettre à jour', 'scg-helper'),
 						'maxlength' => '',
 						'placeholder' => '',
 						'prepend' => '',
@@ -1199,7 +1202,7 @@ class scg{
 					],
 					[
 						'key' => 'field_63716b4e891df',
-						'label' => 'Update Message',
+						'label' => __('Message lorsque mis à jour', 'scg-helper'),
 						'name' => 'update_message',
 						'aria-label' => '',
 						'type' => 'text',
@@ -1211,7 +1214,7 @@ class scg{
 							'class' => '',
 							'id' => '',
 						],
-						'default_value' => 'Options Updated',
+						'default_value' => __('Options mises à jour', 'scg-helper'),
 						'maxlength' => '',
 						'placeholder' => '',
 						'prepend' => '',
@@ -1240,7 +1243,7 @@ class scg{
 				'sub_fields' => [
 					[
 						'key' => 'field_637185442d216',
-						'label' => 'After &lt;head&gt;',
+						'label' => __('Après &lt;head&gt;', 'scg-helper'),
 						'name' => 'after_open_head',
 						'aria-label' => '',
 						'type' => 'textarea',
@@ -1260,7 +1263,7 @@ class scg{
 					],
 					[
 						'key' => 'field_637185b12d217',
-						'label' => 'Before &lt;/head&gt;',
+						'label' => __('Avant &lt;/head&gt;', 'scg-helper'),
 						'name' => 'before_close_head',
 						'aria-label' => '',
 						'type' => 'textarea',
@@ -1280,7 +1283,7 @@ class scg{
 					],
 					[
 						'key' => 'field_637185f42d219',
-						'label' => 'After &lt;body&gt;',
+						'label' => __('Après &lt;body&gt;', 'scg-helper'),
 						'name' => 'after_open_body',
 						'aria-label' => '',
 						'type' => 'textarea',
@@ -1300,7 +1303,7 @@ class scg{
 					],
 					[
 						'key' => 'field_637185f02d218',
-						'label' => 'Before &lt;/body&gt;',
+						'label' => __('Avant &lt;/body&gt;', 'scg-helper'),
 						'name' => 'before_close_body',
 						'aria-label' => '',
 						'type' => 'textarea',
@@ -1324,7 +1327,7 @@ class scg{
 			acf_add_local_field([
 				'parent' => 'group_637141e2601c7',
 				'key' => 'field_6371503842c22',
-				'label' => 'Cleaner',
+				'label' => __('Cleaner', 'scg-helper'),
 				'name' => '',
 				'aria-label' => '',
 				'type' => 'tab',
@@ -1343,7 +1346,7 @@ class scg{
 			acf_add_local_field([
 				'parent' => 'group_637141e2601c7',
 				'key' => 'field_637192feggwxh',
-				'label' => 'Notice',
+				'label' => __('Notice', 'scg-helper'),
 				'name' => '',
 				'aria-label' => '',
 				'type' => 'message',
@@ -1355,7 +1358,7 @@ class scg{
 					'class' => '',
 					'id' => '',
 				],
-				'message' => 'You need to save a first time to get options working.',
+				'message' => __('Vous avez besoin d\'enregistrer une fois pour que les configurations fonctionnent.', 'scg-helper'),
 				'new_lines' => 'wpautop',
 				'esc_html' => 0,
 			]);
@@ -1363,11 +1366,11 @@ class scg{
 			acf_add_local_field([
 				'parent' => 'group_637141e2601c7',
 				'key' => 'field_63715d8300da6',
-				'label' => 'Restrict SCG Tab',
+				'label' => __('Restreindre l\'onglet SCG', 'scg-helper'),
 				'name' => 'restrict_scg_tab',
 				'aria-label' => '',
 				'type' => 'user',
-				'instructions' => 'Work only if you set "Change Admin Panel Display" to "Enable"',
+				'instructions' => __('Fonctionne seulement si vous avez configurer "Changer l\'apparence du panneau d\'admin" sur "Activer"', 'scg-helper'),
 				'required' => 0,
 				'conditional_logic' => 0,
 				'wrapper' => [
@@ -1384,7 +1387,7 @@ class scg{
 			acf_add_local_field([
 				'parent' => 'group_637141e2601c7',
 				'key' => 'field_6371508a42c24',
-				'label' => 'Clean Dashboard',
+				'label' => __('Nettoyer le tableau de bord', 'scg-helper'),
 				'name' => 'clean_dashboard',
 				'aria-label' => '',
 				'type' => 'select',
@@ -1397,8 +1400,8 @@ class scg{
 					'id' => '',
 				],
 				'choices' => [
-					'enable' => 'Enable',
-					'disable' => 'Disable',
+					'enable' => __('Activer', 'scg-helper'),
+					'disable' => __('Désactiver', 'scg-helper'),
 				],
 				'default_value' => 'disable',
 				'return_format' => '',
@@ -1412,7 +1415,7 @@ class scg{
 			acf_add_local_field([
 				'parent' => 'group_637141e2601c7',
 				'key' => 'field_637152493e9be',
-				'label' => 'Change Admin Panel Display',
+				'label' => __('Changer l\'apparence du panneau d\'admin', 'scg-helper'),
 				'name' => 'change_display',
 				'aria-label' => '',
 				'type' => 'select',
@@ -1425,8 +1428,8 @@ class scg{
 					'id' => '',
 				],
 				'choices' => [
-					'enable' => 'Enable',
-					'disable' => 'Disable',
+					'enable' => __('Activer', 'scg-helper'),
+					'disable' => __('Désactiver', 'scg-helper'),
 				],
 				'default_value' => 'disable',
 				'return_format' => 'value',
@@ -1440,7 +1443,7 @@ class scg{
 			acf_add_local_field([
 				'parent' => 'group_637141e2601c7',
 				'key' => 'field_6371a10d4fd26',
-				'label' => 'Gutenberg',
+				'label' => __('Gutenberg', 'scg-helper'),
 				'name' => 'gutenberg',
 				'aria-label' => '',
 				'type' => 'select',
@@ -1453,8 +1456,8 @@ class scg{
 					'id' => '',
 				],
 				'choices' => [
-					'enable' => 'Enable',
-					'disable' => 'Disable',
+					'enable' => __('Activer', 'scg-helper'),
+					'disable' => __('Désactiver', 'scg-helper'),
 				],
 				'default_value' => 'disable',
 				'return_format' => 'value',
@@ -1481,8 +1484,8 @@ class scg{
 					'id' => '',
 				],
 				'choices' => [
-					'enable' => 'Enable',
-					'disable' => 'Disable',
+					'enable' => __('Activer', 'scg-helper'),
+					'disable' => __('Désactiver', 'scg-helper'),
 				],
 				'default_value' => 'disable',
 				'return_format' => 'value',
@@ -1509,8 +1512,8 @@ class scg{
 					'id' => '',
 				],
 				'choices' => [
-					'enable' => 'Enable',
-					'disable' => 'Disable',
+					'enable' => __('Activer', 'scg-helper'),
+					'disable' => __('Désactiver', 'scg-helper'),
 				],
 				'default_value' => 'disable',
 				'return_format' => 'value',
@@ -1537,8 +1540,8 @@ class scg{
 					'id' => '',
 				],
 				'choices' => [
-					'enable' => 'Enable',
-					'disable' => 'Disable',
+					'enable' => __('Activer', 'scg-helper'),
+					'disable' => __('Désactiver', 'scg-helper'),
 				],
 				'default_value' => 'disable',
 				'return_format' => 'value',
@@ -1552,11 +1555,11 @@ class scg{
 			acf_add_local_field([
 				'parent' => 'group_637141e2601c7',
 				'key' => 'field_6371508a42c24fr4',
-				'label' => 'SEO Management',
+				'label' => __('Gestion du SEO', 'scg-helper'),
 				'name' => 'seo_management',
 				'aria-label' => '',
 				'type' => 'select',
-				'instructions' => 'Disable this option if you want use a SEO Plugin.',
+				'instructions' => __('Désactiver cette option si vous voulez utiliser un plugin de SEO.', 'scg-helper'),
 				'required' => 0,
 				'conditional_logic' => 0,
 				'wrapper' => [
@@ -1565,8 +1568,8 @@ class scg{
 					'id' => '',
 				],
 				'choices' => [
-					'enable' => 'Enable',
-					'disable' => 'Disable',
+					'enable' => __('Activer', 'scg-helper'),
+					'disable' => __('Désactiver', 'scg-helper'),
 				],
 				'default_value' => 'enable',
 				'return_format' => '',
@@ -1700,7 +1703,7 @@ class scg{
 						],
 						[
 							'key' => 'field_6371f0646d94a',
-							'label' => 'All Browsers and Android (192x192)',
+							'label' => __('Tous les navigateurs et Android (192x192)', 'scg-helper'),
 							'name' => 'all_browsers_and_android',
 							'aria-label' => '',
 							'type' => 'image',
@@ -1754,7 +1757,7 @@ class scg{
 				acf_add_local_field([
 					'parent' => 'group_637141e2601c7',
 					'key' => 'field_637192ff9b17c',
-					'label' => 'Notice',
+					'label' => __('Notice', 'scg-helper'),
 					'name' => '',
 					'aria-label' => '',
 					'type' => 'message',
@@ -1766,7 +1769,7 @@ class scg{
 						'class' => '',
 						'id' => '',
 					],
-					'message' => 'Use HTML Tag boxes in Theme Tab for add analytic scripts.',
+					'message' => __('Utiliser les boites HTML dans l\'onglet "Thème" pour ajouter des scripts d\'analyse.', 'scg-helper'),
 					'new_lines' => 'wpautop',
 					'esc_html' => 0,
 				]);
@@ -1774,7 +1777,7 @@ class scg{
 				acf_add_local_field([
 					'parent' => 'group_637141e2601c7',
 					'key' => 'field_637195565c37f',
-					'label' => 'Global',
+					'label' => __('Globale', 'scg-helper'),
 					'name' => 'global_seo',
 					'aria-label' => '',
 					'type' => 'group',
@@ -1790,7 +1793,7 @@ class scg{
 					'sub_fields' => [
 						[
 							'key' => 'field_637195cb5c380',
-							'label' => 'Search Engines',
+							'label' => __('Moteurs de recherche', 'scg-helper'),
 							'name' => '',
 							'aria-label' => '',
 							'type' => 'tab',
@@ -1807,7 +1810,7 @@ class scg{
 						],
 						[
 							'key' => 'field_637195e95c381',
-							'label' => 'Title',
+							'label' => __('Titre', 'scg-helper'),
 							'name' => 'title_se',
 							'aria-label' => '',
 							'type' => 'text',
@@ -1827,7 +1830,7 @@ class scg{
 						],
 						[
 							'key' => 'field_637196a45c382',
-							'label' => 'Description',
+							'label' => __('Description', 'scg-helper'),
 							'name' => 'description_se',
 							'aria-label' => '',
 							'type' => 'textarea',
@@ -1847,7 +1850,7 @@ class scg{
 						],
 						[
 							'key' => 'field_637197225c383',
-							'label' => 'Social Networks',
+							'label' => __('Réseaux sociaux', 'scg-helper'),
 							'name' => '',
 							'aria-label' => '',
 							'type' => 'tab',
@@ -1864,7 +1867,7 @@ class scg{
 						],
 						[
 							'key' => 'field_637197265c384',
-							'label' => 'Title',
+							'label' => __('Titre', 'scg-helper'),
 							'name' => 'title_sn',
 							'aria-label' => '',
 							'type' => 'text',
@@ -1884,7 +1887,7 @@ class scg{
 						],
 						[
 							'key' => 'field_6371972d5c385',
-							'label' => 'Description',
+							'label' => __('Description', 'scg-helper'),
 							'name' => 'description_sn',
 							'aria-label' => '',
 							'type' => 'textarea',
@@ -1904,7 +1907,7 @@ class scg{
 						],
 						[
 							'key' => 'field_6371976e5c386',
-							'label' => 'Image',
+							'label' => __('Image', 'scg-helper'),
 							'name' => 'image_sn',
 							'aria-label' => '',
 							'type' => 'image',
@@ -1933,11 +1936,11 @@ class scg{
 				acf_add_local_field([
 					'parent' => 'group_637141e2601c7',
 					'key' => 'field_6371949d5c37e',
-					'label' => 'Post Types',
+					'label' => __('Types de publication', 'scg-helper'),
 					'name' => 'post_types_seo',
 					'aria-label' => '',
 					'type' => 'checkbox',
-					'instructions' => 'Add SEO Module on these Post Types. Page, Post, Terms and Authors has the module.',
+					'instructions' => __('Ajouter le module de SEO sur ces types de publication. Page, Post, les "Terms" et les auteurs ont le module.', 'scg-helper'),
 					'required' => 0,
 					'conditional_logic' => 0,
 					'wrapper' => [
@@ -2008,7 +2011,7 @@ class scg{
 
 				acf_add_local_field_group([
 					'key' => 'group_6371c77346f80',
-					'title' => __('SEO'),
+					'title' => __('Gestion du SEO', 'scg-helper'),
 					'fields' => [],
 					'location' => $__post_types,
 					'menu_order' => 0,
@@ -2025,7 +2028,7 @@ class scg{
 				acf_add_local_field([
 					'parent' => 'group_6371c77346f80',
 					'key' => 'field_6371c773c2454',
-					'label' => 'Search Engines',
+					'label' => __('Moteurs de recherche', 'scg-helper'),
 					'name' => '',
 					'aria-label' => '',
 					'type' => 'tab',
@@ -2044,7 +2047,7 @@ class scg{
 				acf_add_local_field([
 					'parent' => 'group_6371c77346f80',
 					'key' => 'field_6371c8e9c245e',
-					'label' => 'Index',
+					'label' => __('Index', 'scg-helper'),
 					'name' => 'index_se',
 					'aria-label' => '',
 					'type' => 'true_false',
@@ -2066,7 +2069,7 @@ class scg{
 				acf_add_local_field([
 					'parent' => 'group_6371c77346f80',
 					'key' => 'field_6371c813c2458',
-					'label' => 'Title',
+					'label' => __('Titre', 'scg-helper'),
 					'name' => 'title_se',
 					'aria-label' => '',
 					'type' => 'text',
@@ -2088,7 +2091,7 @@ class scg{
 				acf_add_local_field([
 					'parent' => 'group_6371c77346f80',
 					'key' => 'field_6371c86fc2459',
-					'label' => 'Description',
+					'label' => __('Description', 'scg-helper'),
 					'name' => 'description_se',
 					'aria-label' => '',
 					'type' => 'textarea',
@@ -2110,7 +2113,7 @@ class scg{
 				acf_add_local_field([
 					'parent' => 'group_6371c77346f80',
 					'key' => 'field_6371c8acc245a',
-					'label' => 'Social Networks',
+					'label' => __('Réseaux sociaux', 'scg-helper'),
 					'name' => '',
 					'aria-label' => '',
 					'type' => 'tab',
@@ -2129,7 +2132,7 @@ class scg{
 				acf_add_local_field([
 					'parent' => 'group_6371c77346f80',
 					'key' => 'field_6371c8afc245b',
-					'label' => 'Title',
+					'label' => __('Titre', 'scg-helper'),
 					'name' => 'title_sn',
 					'aria-label' => '',
 					'type' => 'text',
@@ -2151,7 +2154,7 @@ class scg{
 				acf_add_local_field([
 					'parent' => 'group_6371c77346f80',
 					'key' => 'field_6371c90ac245f',
-					'label' => 'Description',
+					'label' => __('Description', 'scg-helper'),
 					'name' => 'description_sn',
 					'aria-label' => '',
 					'type' => 'textarea',
@@ -2173,7 +2176,7 @@ class scg{
 				acf_add_local_field([
 					'parent' => 'group_6371c77346f80',
 					'key' => 'field_6371c8bec245d',
-					'label' => 'Image',
+					'label' => __('Image', 'scg-helper'),
 					'name' => 'image_sn',
 					'aria-label' => '',
 					'type' => 'image',
