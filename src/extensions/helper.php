@@ -1603,7 +1603,9 @@ class scg{
 					'wp_navigation',
 					'acf-field',
 					'acf-field-group',
-					'acf-field'
+					'acf-post-type',
+					'acf-taxonomy',
+					'acf-field',
 				];
 
 				foreach ($unsets as $unset) {
