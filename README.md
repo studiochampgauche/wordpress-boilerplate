@@ -1,13 +1,15 @@
 # Our WordPress Project
 Start theming fast with this repo:
 
-## Ready to use:
+## Ready to use
 - Three.js
 - Barba.js
 - Granim.js
 - GSAP
+
+## Plugins included
 - ACF Pro Plugin
-- Polylang Plugin
+- Polylang Free Plugin
 - Champ Gauche Helper Plugin
 
 ## Guide
@@ -23,13 +25,11 @@ cd your_project_root_path
 
 ***3. On your project root, add a directory named `dist` and put inner the WordPress production files***
 
-***4. If is your first time setup, run the command `gulp prod or gulp prod-watch`. If isn't, just run `gulp` command for continue watching.***
+***4. If is your first time setup, run the command `gulp prod or gulp prod-watch`. If isn't, just run `gulp` command for watching.***
 
-***5. Activate required `ACF PRO` and `Champ Gauche Helper` plugins***
+***5. If you play with the Helper Plugin, you need to activate the required plugin `ACF PRO`***
 
 
-## Custom Post Types by Champ Gauche Helper Plugin
-This functionality has been removed in version 1.0.1 because ACF has launch this option with ACF 6.1
-
-## Translation added
-Since Helper Plugin version 1.0.1, translation has been added. Default language is French and existing translation is en_CA and en_US.
+## Languages
+- Default: French
+- Existing Translations: en_CA, en_US, en_GB
