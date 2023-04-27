@@ -5,10 +5,9 @@ Start theming fast with this repo. Create an optimized and compressed project.
 - GSAP Ready
 - ACF Pro Plugin included
 - Free Polylang Plugin included
-- Minimal files for three.js and granim.js are included
-- Use our Champ Gauche Helper Plugin:
+- three.module.js and granim.js are included
+- Champ Gauche Helper Plugin included:
 	- Manage SEO & favicon
-	- Create Custom Post Type and taxonomies
 	- Maintenance mode in one click
 	- Add menu/theme locations
 	- Add ACF Page Options
@@ -18,6 +17,7 @@ Start theming fast with this repo. Create an optimized and compressed project.
 	- Enable/disable Front-end Global Styles
 	- Enable/disable Front-end WP Block Library
 	- Enable/disable Front-end Classic Theme Styles
+	- Add scripts quickly before/after opened/closed head/body tags
 
 
 
@@ -40,7 +40,7 @@ cd your_project_root_path
 
 ___
 
-When you add plugins, fonts, images, external css, external scss and external js, you need to rerun the `gulp prod or gulp prod-watch` command.
+When you add plugins, fonts, images, external css/scss/js, you need to rerun the `gulp prod or gulp prod-watch` command.
 
 #### Affected directories:
 - `src > extensions`
