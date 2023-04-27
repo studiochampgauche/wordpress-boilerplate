@@ -13,7 +13,7 @@
 					return new WP_Error(
 						'cannot_access_rest',
 						__('JSON REST API IS PROTECTED'),
-						['status' => 'NICE TRY']
+						['status' => 403]
 					);
 				}
 
