@@ -49,3 +49,6 @@ When you add plugins, fonts, images, external css/scss/js, you need to rerun the
 - `src > scss > inc`
 - `src > js > inc`
 ___
+
+# Custom Post Types by Champ Gauche Helper Plugin
+This functionality has been removed in version 1.0.1 because ACF has launch this option with ACF 6.1
