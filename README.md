@@ -13,7 +13,7 @@ A WordPress Project that allow you start theming super fast.
 - Champ Gauche Helper
 
 ## Guide
-***1. Clone the repo and install the Node Modules***
+1. Clone the repo and install the Node Modules
 
 ```
 cd your_project_root_path
@@ -21,13 +21,13 @@ cd your_project_root_path
 && npm i
 ```
 
-***2. In `src` directory, duplicate wp-config-sample.php to wp-config.php and setup it***
+2. In `src` directory, duplicate wp-config-sample.php to wp-config.php and setup it
 
-***3. On your project root, add a directory named `dist` and put inner the WordPress production files***
+3. On your project root, add a directory named `dist` and put inner the WordPress production files
 
-***4. If is your first time setup, run the command `gulp prod or gulp prod-watch`. If isn't, just run `gulp` command for watching.***
+4. If is your first time setup, run the command `gulp prod or gulp prod-watch`. If isn't, just run `gulp` command for watching.
 
-***5. If you play with the Helper Plugin, you need to activate the required plugin `ACF PRO`***
+5. If you play with the Helper Plugin, you need to activate the required plugin `ACF PRO`
 
 
 ## Champ Gauche Helper Plugin
