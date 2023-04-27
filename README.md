@@ -32,7 +32,7 @@ cd your_project_root_path
 
 ## Champ Gauche Helper Plugin
 
-We have build this plugin arround ACF Pro for fix basic things. Manage quickly:
+We have built this plugin around ACF Pro for fix basic things. Manage quickly:
 
 - SEO
 - SVG Acceptance
