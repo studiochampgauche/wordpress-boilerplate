@@ -8,9 +8,9 @@ A WordPress Project that allow you start theming super fast.
 - GSAP
 
 ## Plugins included
-- ACF Pro Plugin
-- Polylang Free Plugin
-- Champ Gauche Helper Plugin
+- ACF Pro
+- Polylang Free
+- Champ Gauche Helper
 
 ## Guide
 ***1. Clone the repo and install the Node Modules***
