@@ -30,6 +30,21 @@ cd your_project_root_path
 ***5. If you play with the Helper Plugin, you need to activate the required plugin `ACF PRO`***
 
 
-## Languages
+## Champ Gauche Helper Plugin
+
+We have build this plugin arround ACF Pro for fix basic things. Manage quickly:
+
+- SEO
+- SVG Acceptance
+- Theme locations
+- Maintenance Mode
+- ACF Options Pages
+- Gutenberg Presence
+- Basic Styles Presences
+- Source Code Clearance
+- Admin Panel Appearance
+- Scripts before/after opened/closed head/body tags
+
+### Languages
 - Default: French
 - Existing Translations: en_CA, en_US, en_GB
