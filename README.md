@@ -41,6 +41,7 @@ We have built this plugin around ACF Pro for fix basic things. Manage quickly:
 - ACF Options Pages
 - Gutenberg Presence
 - Basic Styles Presence
+- Front-end Top Bar Presence
 - Source Code Clearance
 - Admin Panel Appearance
 - Scripts before/after opened/closed head/body tags
@@ -56,3 +57,6 @@ You can call it like that:
 ```
 scg::menu($theme_location, ['add_mobile_bars' => 2]);
 ```
+
+## The Theme
+The Theme is built for work with Barba transitions and GSAP ScrollSmoother/ScrollTrigger on start.
