@@ -26,19 +26,28 @@ class scg{
 		if(!class_exists('ACF')) return;
 
 		/*
-		* Load Languages
+		* ACF in JSON
 		*/
-		add_action('init', function(){
-			load_plugin_textdomain('scg-helper', false, basename(__DIR__) . '/langs/');
-		});
+		$this->acf_json();
 
 
 		/*
-		* Remove Admin Bar
+		* Init Action
 		*/
 		add_action('init', function(){
+
+			/*
+			* Load Languages
+			*/
+			load_plugin_textdomain('scg-helper', false, basename(__DIR__) . '/langs/');
+
+
+			/*
+			* Remove Top Bar
+			*/
 			if(self::field('top_bar') !== 'enable')
 				add_filter('show_admin_bar', '__return_false');
+
 		});
 
 
@@ -137,28 +146,6 @@ class scg{
 			];
 			
 		}, 10, 4);
-
-
-		/*
-		* Save ACF in JSON
-		*/
-		$this->acf_path = get_stylesheet_directory() . '/datas/acf';
-
-		if(is_dir($this->acf_path)){
-			add_filter('acf/settings/save_json', function($path){
-				return $this->acf_path;
-			});
-
-			add_filter('acf/settings/load_json', function($paths){
-				// Remove original path
-				unset( $paths[0] );
-
-				// Append our new path
-				$paths[] = $this->acf_path;
-
-				return $paths;
-			});
-		}
 
 
 		/*
@@ -2259,6 +2246,46 @@ class scg{
 			}
 		});
 
+	}
+
+
+	private function acf_json(){
+
+		$this->acf_path = is_multisite() ? get_stylesheet_directory() . '/datas/acf/' . get_site()->blog_id : get_stylesheet_directory() . '/datas/acf';
+
+		add_action('admin_init', function(){
+
+			/*
+			* If ACF JSON Directory not there, create it
+			*/
+
+			if(!file_exists($this->acf_path)){
+				mkdir($this->acf_path, 0777, true);
+				fopen($this->acf_path . '/index.php', 'w');
+			}
+
+		});
+
+
+		/*
+		* Save ACF JSON
+		*/
+		add_filter('acf/settings/save_json', function($path){
+
+			return $this->acf_path;
+
+		});
+
+		add_filter('acf/settings/load_json', function($paths){
+
+			// Remove original path
+			unset( $paths[0] );
+
+			// Append our new path
+			$paths[] = $this->acf_path;
+
+			return $paths;
+		});
 	}
 
 
