@@ -55,7 +55,7 @@ We have built this plugin around ACF Pro for fix basic things. Manage quickly:
 - Existing Translations: en_CA, en_US, en_GB
 
 ### Static PHP Functions (Documentation is coming soon)
-The plugin provide some PHP functions too. Put a look at the end of file `plugins/scg-helper/helper.php`
+The plugin provide some PHP functions too. Put a look at the end of file `src/extensions/scg-helper/helper.php`
 
 You can call it like that:
 ```
