@@ -49,6 +49,7 @@ We have built this plugin around ACF Pro for fix basic things. Manage quickly:
 - Source Code Clearance
 - Admin Panel Appearance
 - Scripts before/after opened/closed head/body tags
+- Save ACF in JSON (https://www.advancedcustomfields.com/resources/local-json/)
 
 ### Languages
 - Default: French
