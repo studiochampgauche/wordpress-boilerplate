@@ -13,7 +13,7 @@ A WordPress Project that allow us start theming super fast. Work good in Multisi
 - Champ Gauche Helper
 
 ## Guide
-1. Clone the repo and install the Node Modules
+1. Clone the repo and install the Node Modules (tested with nodeJS 18.9.0, 18.12.0 and 18.16.0)
 
 ```
 cd your_project_root_path
@@ -60,7 +60,3 @@ scg::menu($theme_location, ['add_mobile_bars' => 2]);
 
 ## The Theme
 The Theme is built for work with Barba transitions and GSAP ScrollSmoother/ScrollTrigger on start.
-
-## Requirement
-
-- NodeJS (tested with nodeJS 18.9.0, 18.12.0 and 18.16.0)
