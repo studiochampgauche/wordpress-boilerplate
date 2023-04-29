@@ -29,11 +29,6 @@ cd your_project_root_path
 
 5. If you play with the Helper Plugin, you need to activate the required plugin `ACF PRO`
 
-## Requirement
-
-- NodeJS (tested with nodeJS 18.9.0, 18.12.0 and 18.16.0)
-
-
 ## Champ Gauche Helper Plugin
 
 We have built this plugin around ACF Pro for fix basic things. Manage quickly:
@@ -65,3 +60,7 @@ scg::menu($theme_location, ['add_mobile_bars' => 2]);
 
 ## The Theme
 The Theme is built for work with Barba transitions and GSAP ScrollSmoother/ScrollTrigger on start.
+
+## Requirement
+
+- NodeJS (tested with nodeJS 18.9.0, 18.12.0 and 18.16.0)
