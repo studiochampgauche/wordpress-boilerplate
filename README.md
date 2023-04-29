@@ -29,6 +29,10 @@ cd your_project_root_path
 
 5. If you play with the Helper Plugin, you need to activate the required plugin `ACF PRO`
 
+## Requirements
+
+- NodeJS (tested with nodeJS 18.9.0, 18.12.0 and 18.16.0)
+
 
 ## Champ Gauche Helper Plugin
 
