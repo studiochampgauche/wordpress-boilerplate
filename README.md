@@ -1,5 +1,5 @@
 # Our WordPress Project
-A WordPress Project that allow us start theming super fast that work good with Multisite.
+A WordPress Project that allow us start theming super fast. Work good in Multisite.
 
 ## Ready to use
 - Three.js
