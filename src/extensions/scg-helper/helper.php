@@ -2393,24 +2393,32 @@ class scg{
 		return $result;
 	}
 
-	static function button($text = 'Aucun texte.', $args = ['href' => null, 'class' => null, 'attr' => null, 'before' => null, 'after' => null]){
+	static function button($text = 'Aucun texte.', $args = []){
 
-		$href = !empty($args['href']) ? ' data-href="'. $args['href'] .'"' : null;
-		$class = !empty($args['class']) ? ' class="'. $args['class'] .'"' : null;
-		$attr = !empty($args['attr']) ? ' '. $args['attr'] : null;
-		$before = !empty($args['before']) ? ' '. $args['before'] : null;
-		$after = !empty($args['after']) ? ' '. $args['after'] : null;
+		$href = $args['href'] ? $args['href'] : null;
+		$class = $args['class'] ? ' '. $args['class'] : null;
+		$attr = $args['attr'] ? ' '. $args['attr'] : null;
+		$before = $args['before'] ? $args['before'] : null;
+		$after = $args['after'] ? $args['after'] : null;
+		$text = $text ? '<span>'. $text .'</span>' : null;
 
-		$result = '<button'. $class . $href . $attr .'>';
-			$result .= $before;
+		if($href){
+			return '
+				<a href="'. $href .'" class="btn'. $class .'"'. $attr .'>
 
-				if($text)
-					$result .= '<span>'. $text .'</span>';
-				
-			$result .= $after;
-		$result .= '</button>';
+				'. $before . $text . $after .'
 
-		return $result;
+				</a>
+			';
+		} else {
+			return '
+				<button class="btn'. $class .'"'. $attr .'>
+
+				'. $before . $text . $after .'
+
+				</button>
+			';
+		}
 	}
 
 	static function id($code_base = 'abcdefghijABCDEFGHIJ', $substr = [0, 4]){
