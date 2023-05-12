@@ -2395,11 +2395,11 @@ class scg{
 
 	static function button($text = 'Aucun texte.', $args = []){
 
-		$href = $args['href'] ? $args['href'] : null;
-		$class = $args['class'] ? ' '. $args['class'] : null;
-		$attr = $args['attr'] ? ' '. $args['attr'] : null;
-		$before = $args['before'] ? $args['before'] : null;
-		$after = $args['after'] ? $args['after'] : null;
+		$href = isset($args['href']) && $args['href'] ? $args['href'] : null;
+		$class = isset($args['class']) && $args['class'] ? ' '. $args['class'] : null;
+		$attr = isset($args['attr']) && $args['attr'] ? ' '. $args['attr'] : null;
+		$before = isset($args['before']) && $args['before'] ? $args['before'] : null;
+		$after = isset($args['after']) && $args['after'] ? $args['after'] : null;
 		$text = $text ? '<span>'. $text .'</span>' : null;
 
 		if($href){
