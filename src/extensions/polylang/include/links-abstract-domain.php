@@ -47,18 +47,6 @@ abstract class PLL_Links_Abstract_Domain extends PLL_Links_Permalinks {
 	}
 
 	/**
-	 * Sets the home urls.
-	 *
-	 * @since 2.2
-	 *
-	 * @param PLL_Language $language Language object.
-	 */
-	protected function set_home_url( $language ) {
-		$home_url = $this->home_url( $language );
-		$language->set_home_url( $home_url, $home_url ); // Search url and home url are the same.
-	}
-
-	/**
 	 * Modifies an url to use the domain associated to the current language.
 	 *
 	 * @since 1.8
@@ -68,7 +56,9 @@ abstract class PLL_Links_Abstract_Domain extends PLL_Links_Permalinks {
 	 */
 	public function site_url( $url ) {
 		$lang = $this->get_language_from_url();
+
 		$lang = $this->model->get_language( $lang );
+
 		return $this->add_language_to_link( $url, $lang );
 	}
 
@@ -86,5 +76,21 @@ abstract class PLL_Links_Abstract_Domain extends PLL_Links_Permalinks {
 		$uploads['url'] = $this->add_language_to_link( $uploads['url'], $lang );
 		$uploads['baseurl'] = $this->add_language_to_link( $uploads['baseurl'], $lang );
 		return $uploads;
+	}
+
+	/**
+	 * Adds home and search URLs to language data before the object is created.
+	 *
+	 * @since 3.4.1
+	 *
+	 * @param array $additional_data Array of language additional data.
+	 * @param array $language        Language data.
+	 * @return array Language data with home and search URLs added.
+	 */
+	public function set_language_home_urls( $additional_data, $language ) {
+		$language = array_merge( $language, $additional_data );
+		$additional_data['search_url'] = $this->home_url( $language['slug'] );
+		$additional_data['home_url']   = $additional_data['search_url'];
+		return $additional_data;
 	}
 }

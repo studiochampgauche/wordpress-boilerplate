@@ -46,8 +46,8 @@ class PLL_Admin_Filters extends PLL_Filters {
 	public function personal_options_update( $user_id ) {
 		// Biography translations
 		foreach ( $this->model->get_languages_list() as $lang ) {
-			$meta = $lang->slug == $this->options['default_lang'] ? 'description' : 'description_' . $lang->slug;
-			$description = empty( $_POST[ 'description_' . $lang->slug ] ) ? '' : trim( $_POST[ 'description_' . $lang->slug ] ); // phpcs:ignore WordPress.Security.NonceVerification, WordPress.Security.ValidatedSanitizedInput
+			$meta        = $lang->is_default ? 'description' : 'description_' . $lang->slug;
+			$description = empty( $_POST[ 'description_' . $lang->slug ] ) ? '' : trim( $_POST[ 'description_' . $lang->slug ] );  // phpcs:ignore WordPress.Security.NonceVerification, WordPress.Security.ValidatedSanitizedInput
 
 			/** This filter is documented in wp-includes/user.php */
 			$description = apply_filters( 'pre_user_description', $description ); // Applies WP default filter wp_filter_kses
@@ -65,7 +65,7 @@ class PLL_Admin_Filters extends PLL_Filters {
 	 */
 	public function personal_options( $profileuser ) {
 		foreach ( $this->model->get_languages_list() as $lang ) {
-			$meta = $lang->slug == $this->options['default_lang'] ? 'description' : 'description_' . $lang->slug;
+			$meta        = $lang->is_default ? 'description' : 'description_' . $lang->slug;
 			$description = get_user_meta( $profileuser->ID, $meta, true );
 
 			printf(
@@ -90,9 +90,10 @@ class PLL_Admin_Filters extends PLL_Filters {
 	}
 
 	/**
-	 * Adds a text direction dependent class to the body
+	 * Adds custom classes to the body
 	 *
-	 * @since 2.2
+	 * @since 2.2 Adds a text direction dependent class to the body.
+	 * @since 3.4 Adds a language dependent class to the body.
 	 *
 	 * @param string $classes Space-separated list of CSS classes.
 	 * @return string
@@ -100,6 +101,7 @@ class PLL_Admin_Filters extends PLL_Filters {
 	public function admin_body_class( $classes ) {
 		if ( ! empty( $this->curlang ) ) {
 			$classes .= ' pll-dir-' . ( $this->curlang->is_rtl ? 'rtl' : 'ltr' );
+			$classes .= ' pll-lang-' . $this->curlang->slug;
 		}
 		return $classes;
 	}

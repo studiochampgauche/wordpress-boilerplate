@@ -65,7 +65,7 @@ class PLL_Settings extends PLL_Admin_Base {
 	public function register_settings_modules() {
 		$modules = array();
 
-		if ( $this->model->get_languages_list() ) {
+		if ( $this->model->has_languages() ) {
 			$modules = array(
 				'PLL_Settings_Url',
 				'PLL_Settings_Browser',
@@ -240,14 +240,7 @@ class PLL_Settings extends PLL_Admin_Base {
 			case 'content-default-lang':
 				check_admin_referer( 'content-default-lang' );
 
-				if ( $nolang = $this->model->get_objects_with_no_lang() ) {
-					if ( ! empty( $nolang['posts'] ) ) {
-						$this->model->set_language_in_mass( 'post', $nolang['posts'], $this->options['default_lang'] );
-					}
-					if ( ! empty( $nolang['terms'] ) ) {
-						$this->model->set_language_in_mass( 'term', $nolang['terms'], $this->options['default_lang'] );
-					}
-				}
+				$this->model->set_language_in_mass();
 
 				self::redirect(); // To refresh the page ( possible thanks to the $_GET['noheader']=true )
 				break;

@@ -257,7 +257,7 @@ class PLL_Admin_Site_Health {
 	}
 
 	/**
-	 * Add Polylang Languages settings to Site Health Informations tab.
+	 * Adds Polylang Languages settings to Site Health Information tab.
 	 *
 	 * @since 2.8
 	 *
@@ -268,7 +268,7 @@ class PLL_Admin_Site_Health {
 		foreach ( $this->model->get_languages_list() as $language ) {
 			$fields = array();
 
-			foreach ( get_object_vars( $language ) as $key => $value ) {
+			foreach ( $language->to_array() as $key => $value ) {
 				if ( in_array( $key, $this->exclude_language_keys(), true ) ) {
 					continue;
 				}
@@ -278,7 +278,12 @@ class PLL_Admin_Site_Health {
 				}
 
 				$fields[ $key ]['label'] = $key;
-				$fields[ $key ]['value'] = $value;
+
+				if ( 'term_props' === $key && is_array( $value ) ) {
+					$fields[ $key ]['value'] = $this->get_info_term_props( $value );
+				} else {
+					$fields[ $key ]['value'] = $value;
+				}
 
 				if ( 'term_group' === $key ) {
 					$fields[ $key ]['label'] = 'order'; // Changed for readability but not translated as other keys are not.
@@ -295,6 +300,36 @@ class PLL_Admin_Site_Health {
 		}
 
 		return $debug_info;
+	}
+
+	/**
+	 * Adds term props data to the info languages array.
+	 *
+	 * @since 3.4
+	 *
+	 * @param array $value The term props data.
+	 * @return array The term props data formatted for the info languages tab.
+	 */
+	protected function get_info_term_props( $value ) {
+		$return_value = array();
+
+		foreach ( $value as $language_taxonomy => $item ) {
+			$language_taxonomy_array = array_fill( 0, count( $item ), $language_taxonomy );
+
+			$keys_with_language_taxonomy = array_map(
+				function ( $key, $language_taxonomy ) {
+					return "{$language_taxonomy}/{$key}";
+				},
+				array_keys( $item ),
+				$language_taxonomy_array
+			);
+
+			$value = array_combine( $keys_with_language_taxonomy, $item );
+			if ( is_array( $value ) ) {
+				$return_value = array_merge( $return_value, $value );
+			}
+		}
+		return $return_value;
 	}
 
 	/**
@@ -417,8 +452,10 @@ class PLL_Admin_Site_Health {
 	 *
 	 * @since 3.1
 	 *
-	 * @param int $limit Max number of posts to show per post type.
+	 * @param int $limit Max number of posts to show per post type. `-1` to return all of them. Default is 5.
 	 * @return int[][] Array containing an array of post ids.
+	 *
+	 * @phpstan-param -1|positive-int $limit
 	 */
 	public function get_post_ids_without_lang( $limit = 5 ) {
 		$posts = array();
@@ -441,8 +478,10 @@ class PLL_Admin_Site_Health {
 	 *
 	 * @since 3.1
 	 *
-	 * @param int $limit Max number of terms to show per post type.
+	 * @param int $limit Max number of terms to show per post type. `-1` to return all of them. Default is 5.
 	 * @return int[][] Array containing an array of term ids.
+	 *
+	 * @phpstan-param -1|positive-int $limit
 	 */
 	public function get_term_ids_without_lang( $limit = 5 ) {
 		$terms = array();
