@@ -1,5 +1,5 @@
 /*!
- * ScrollSmoother 3.11.5
+ * ScrollSmoother 3.12.1
  * https://greensock.com
  *
  * @license Copyright 2008-2023, GreenSock. All rights reserved.
@@ -13,9 +13,8 @@ let gsap, _coreInitted, _win, _doc, _docEl, _body, _root, _toArray, _clamp, Scro
 	_windowExists = () => typeof(window) !== "undefined",
 	_getGSAP = () => gsap || (_windowExists() && (gsap = window.gsap) && gsap.registerPlugin && gsap),
 	_bonusValidated = 1, //<name>ScrollSmoother</name>
-	_isViewport = e => !!~_root.indexOf(e),
-	_getTime = Date.now,
 	_round = value => Math.round(value * 100000) / 100000 || 0,
+	_maxScroll = scroller => ScrollTrigger.maxScroll(scroller || _win),
 	_autoDistance = (el, progress) => { // for calculating the distance (and offset) for elements with speed: "auto". Progress is for if it's "above the fold" (negative start position), so we can crop as little as possible.
 		let parent = el.parentNode || _docEl,
 			b1 = el.getBoundingClientRect(),
@@ -27,7 +26,7 @@ let gsap, _coreInitted, _win, _doc, _docEl, _body, _root, _toArray, _clamp, Scro
 			ratio, extraChange;
 		if (change > 0) { // if the image starts at the BOTTOM of the container, adjust things so that it shows as much of the image as possible while still covering.
 			ratio = b2.height / (_win.innerHeight + b2.height);
-			extraChange = ratio === 0.5 ? b2.height * 2 : Math.min(b2.height, -change * ratio / (2 * ratio - 1)) * 2 * (progress || 1);
+			extraChange = ratio === 0.5 ? b2.height * 2 : Math.min(b2.height, Math.abs(-change * ratio / (2 * ratio - 1))) * 2 * (progress || 1);
 			offset += progress ? -extraChange * progress : -extraChange / 2; // whatever the offset, we must double that in the opposite direction to compensate.
 			change += extraChange;
 		}
@@ -106,7 +105,7 @@ export class ScrollSmoother {
 			},
 			resizeObserver = typeof(ResizeObserver) !== "undefined" && vars.autoResize !== false && new ResizeObserver(() => {
 				if (!ScrollTrigger.isRefreshing) {
-					let max = ScrollTrigger.maxScroll(wrapper);
+					let max = _maxScroll(wrapper) * speed;
 					max < -currentY && scrollTop(max) // if the user scrolled down to the bottom, for example, and then the page resizes smaller, we should adjust things accordingly right away so that the scroll position isn't past the very end.
 					_onResizeDelayedCall.restart(true);
 				}
@@ -120,43 +119,97 @@ export class ScrollSmoother {
 				ScrollTrigger.isInViewport(e.target) || (e.target === lastFocusElement) ||  this.scrollTo(e.target, false, "center center");
 				lastFocusElement = e.target;
 			},
-			adjustParallaxPosition = (triggers, createdAfterEffectWasApplied) => {
-				let pins, start, dif, markers;
-				effects.forEach(st => {
-					pins = st.pins;
-					markers = st.markers;
-					triggers.forEach(trig => {
-						if (st.trigger && trig.trigger && st !== trig && (trig.trigger === st.trigger || trig.pinnedContainer === st.trigger || st.trigger.contains(trig.trigger))) {
-							start = trig.start;
-							dif = (start - st.start - st.offset) / st.ratio - (start - st.start);
-							// createdAfterEffectWasApplied && (dif -= (gsap.getProperty(st.trigger, "y") - st.startY) / st.ratio); // the effect applied a y offset, so if the ScrollTrigger was created after that, it'll be based on that position so we must compensate. Later we added code to ScrollTrigger to roll back in this situation anyway, so this isn't necessary. Saving it in case a situation arises where it comes in handy.
-							pins.forEach(p => dif -= p.distance / st.ratio - p.distance);
-							trig.setPositions(start + dif, trig.end + dif);
-							trig.markerStart && markers.push(gsap.quickSetter([trig.markerStart, trig.markerEnd], "y", "px"));
-							if (trig.pin && trig.end > 0) {
-								dif = trig.end - trig.start;
-								pins.push({start: trig.start, end: trig.end, distance: dif, trig: trig});
-								st.setPositions(st.start, st.end + dif);
-								st.vars.onRefresh(st);
-							}
-						}
-					});
+			_transformPosition = (position, st) => { // feed in a position (start or end scroll value) and a ScrollTrigger that's associated with a parallax effect and it'll spit back the adjusted position based on the movement of the trigger. For example, if the trigger goes at a speed of 0.5 while in the viewport, we must push the start/end values of OTHER ScrollTriggers that use that same trigger further down to compensate.
+				if (position < st.start) {
+					return position;
+				}
+				let ratio = isNaN(st.ratio) ? 1 : st.ratio,
+					change = st.end - st.start,
+					distance = position - st.start,
+					offset = st.offset || 0,
+					pins = st.pins || [],
+					pinOffset = pins.offset || 0,
+					progressOffset = (st._startClamp && st.start <= 0) || (st.pins && st.pins.offset) ? 0 : (st._endClamp && st.end === _maxScroll()) ? 1 : 0.5;
+
+				pins.forEach(p => { // remove any pinning space/distance
+					change -= p.distance;
+					if (p.nativeStart <= position) {
+						distance -= p.distance;
+					}
 				});
+				if (pinOffset) { // edge case when a clamped effect starts mid-pin; we've gotta compensate for the smaller change amount (the yOffset gets set to the st.pins.offset, so let's say it clamps such that the page starts with the element pinned 100px in, we have to set the yOffset to 100 but then subtract 100 from the change value to compensate, thus we must scale the positions accordingly based on the ratios. Like if it would normally have a change of 2000, and a pin would normally hit at 1000, but we're offsetting by 100, that means everything must scale now that we're only moving 1900px rather than 2000px.
+					distance *= (change - pinOffset / ratio) / change;
+				}
+				return position + (distance - offset * progressOffset) / ratio - distance;
+			},
+			adjustEffectRelatedTriggers = (st, triggers, partial) => { // if we're using this method to do only a partial Array of triggers, we should NOT reset or rebuild the pin data. For example, we tap into this from the offset() method.
+				partial || (st.pins.length = st.pins.offset = 0);
+				let pins = st.pins,
+					markers = st.markers,
+					dif, isClamped, start, end, nativeStart, nativeEnd, i, trig;
+				for (i = 0; i < triggers.length; i++) {
+					trig = triggers[i];
+					if (st.trigger && trig.trigger && st !== trig && (trig.trigger === st.trigger || trig.pinnedContainer === st.trigger || st.trigger.contains(trig.trigger))) {
+						nativeStart = trig._startNative || trig._startClamp || trig.start;
+						nativeEnd = trig._endNative || trig._endClamp || trig.end;
+						start = _transformPosition(nativeStart, st);
+						// note: _startClamp and _endClamp are populated with the unclamped values. For the sake of efficiency sake, we use the property both like a boolean to indicate that clamping is enabled AND the actual original unclamped value which we need in situations like if there's a data-speed="" on an element that has something like start="clamp(top bottom)". For in-viewport elements, it would clamp the values on the ScrollTrigger first, then feed it here and we'd adjust it on the clamped value which could throw things off - we need to apply the logic to the unclamped value and THEN re-apply clamping on the result.
+						end = (trig.pin && nativeEnd > 0) ? start + (nativeEnd - nativeStart) : _transformPosition(nativeEnd, st);
+						trig.setPositions(start, end, true, (trig._startClamp ? Math.max(0, start) : start) - nativeStart); // the last value (pinOffset) is to adjust the pinStart y value inside ScrollTrigger to accommodate for the y offset that gets applied by the parallax effect.
+						trig.markerStart && markers.push(gsap.quickSetter([trig.markerStart, trig.markerEnd], "y", "px"));
+						if (trig.pin && trig.end > 0 && !partial) {
+							dif = trig.end - trig.start;
+							isClamped = (st._startClamp && trig.start < 0);
+							if (isClamped) {
+								if (st.start > 0) { // the trigger element on the effect must have been pinned BEFORE its starting position, so in this edge case we must adjust the start position to be 0 and end position to get pushed further by the amount of the overlap
+									st.setPositions(0, st.end + (st._startNative - st.start), true); // add the overlap amount
+									adjustEffectRelatedTriggers(st, triggers);
+									return; // start over for this trigger element!
+								}
+								dif += trig.start;
+								pins.offset = -trig.start; // edge case when a clamped effect starts mid-pin, we've gotta compensate in the onUpdate algorithm.
+							}
+							pins.push({start: trig.start, nativeStart, end: trig.end, distance: dif, trig: trig});
+							st.setPositions(st.start, st.end + (isClamped ? -trig.start : dif), true);
+						}
+					}
+				}
+			},
+			adjustParallaxPosition = (triggers, createdAfterEffectWasApplied) => {
+				effects.forEach(st => adjustEffectRelatedTriggers(st, triggers, createdAfterEffectWasApplied));
 			},
 			onRefresh = () => {
 				removeScroll();
 				requestAnimationFrame(removeScroll);
 				if (effects) { // adjust all the effect start/end positions including any pins!
+					ScrollTrigger.getAll().forEach(st => { // record the native start/end positions because we'll be messing with them and need a way to have a "source of truth"
+						st._startNative = st.start;
+						st._endNative = st.end;
+					});
 					effects.forEach(st => {
-						let start = st.start,
-							end = st.auto ? Math.min(ScrollTrigger.maxScroll(st.scroller), st.end) : start + (st.end - start) / st.ratio,
-							offset = (end - st.end) / 2; // we split the difference so that it reaches its natural position in the MIDDLE of the viewport
-						start -= offset;
-						end -= offset;
+						let start = st._startClamp || st.start, // if it was already clamped, we should base things on the unclamped value and then do the clamping here.
+							end = st.autoSpeed ? Math.min(_maxScroll(), st.end) : start + Math.abs((st.end - start) / st.ratio),
+							offset = end - st.end; // we split the difference so that it reaches its natural position in the MIDDLE of the viewport
+						start -= offset / 2;
+						end -= offset / 2;
+						if (start > end) {
+							let s = start;
+							start = end;
+							end = s;
+						}
+						if (st._startClamp && start < 0) {
+							end = st.ratio < 0 ? _maxScroll() : st.end / st.ratio;
+							offset = end - st.end;
+							start = 0;
+						} else if (st.ratio < 0 || (st._endClamp && end >= _maxScroll())) {
+							end = _maxScroll();
+							start = st.ratio < 0 ? 0 : st.ratio > 1 ? 0 : end - (end - st.start) / st.ratio;
+							offset = (end - start) * st.ratio - (st.end - st.start);
+						}
 						st.offset = offset || 0.0001; // we assign at least a tiny value because we check in the onUpdate for .offset being set in order to apply values.
-						st.pins.length = 0;
-						st.setPositions(Math.min(start, end), Math.max(start, end));
-						st.vars.onRefresh(st);
+						st.pins.length = st.pins.offset = 0;
+						st.setPositions(start, end, true);
+						// note: another way of getting only the amount of offset traveled for a certain ratio is: distanceBetweenStartAndEnd * (1 / ratio - 1)
 					});
 					adjustParallaxPosition(ScrollTrigger.sort());
 				}
@@ -173,7 +226,8 @@ export class ScrollSmoother {
 					let v = typeof(value) === "function" ? value(index, el) : value;
 					v || v === 0 || (v = el.getAttribute("data-" + effectsPrefix + name) || (name === "speed" ? 1 : 0));
 					el.setAttribute("data-" + effectsPrefix + name, v);
-					return v === "auto" ? v : parseFloat(v);
+					let clamp = (v + "").substr(0, 6) === "clamp(";
+					return {clamp, value: clamp ? v.substr(6, v.length - 7) : v};
 				};
 			},
 			createEffect = (el, speed, lag, index, effectsPadding) => {
@@ -183,12 +237,13 @@ export class ScrollSmoother {
 					startY = gsap.getProperty(el, "y"),
 					cache = el._gsap,
 					ratio, st, autoSpeed, scrub, progressOffset, yOffset,
+					pins = [],
 					initDynamicValues = () => {
 						speed = getSpeed();
-						lag = getLag();
-						ratio = parseFloat(speed) || 1;
-						autoSpeed = speed === "auto";
-						progressOffset = autoSpeed ? 0 : 0.5;
+						lag = parseFloat(getLag().value);
+						ratio = parseFloat(speed.value) || 1;
+						autoSpeed = speed.value === "auto";
+						progressOffset = autoSpeed || (st && st._startClamp && st.start <= 0) || pins.offset ? 0 : (st && st._endClamp && st.end === _maxScroll()) ? 1 : 0.5;
 						scrub && scrub.kill();
 						scrub = lag && gsap.to(el, {ease: _expo, overwrite: false, y: "+=0", duration: lag});
 						if (st) {
@@ -201,7 +256,6 @@ export class ScrollSmoother {
 						cache.renderTransform(1);
 						initDynamicValues();
 					},
-					pins = [],
 					markers = [],
 					change = 0,
 					updateChange = self => {
@@ -211,10 +265,11 @@ export class ScrollSmoother {
 							change = auto.change;
 							yOffset = auto.offset;
 						} else {
-							change = (self.end - self.start) * (1 - ratio);
-							yOffset = 0;
+							yOffset = pins.offset || 0;
+							change = (self.end - self.start - yOffset) * (1 - ratio);
 						}
 						pins.forEach(p => change -= p.distance * (1 - ratio));
+						self.offset = change || 0.001;
 						self.vars.onUpdate(self);
 						scrub && scrub.progress(1);
 					};
@@ -222,8 +277,8 @@ export class ScrollSmoother {
 				if (ratio !== 1 || autoSpeed || scrub) {
 					st = ScrollTrigger.create({
 						trigger: autoSpeed ? el.parentNode : el,
-						start: "top bottom+=" + effectsPadding,
-						end: "bottom top-=" + effectsPadding,
+						start: () => speed.clamp ? "clamp(top bottom+=" + effectsPadding + ")" : "top bottom+=" + effectsPadding,
+						end: () => speed.value < 0 ? "max" : speed.clamp ? "clamp(bottom top-=" + effectsPadding + ")" : "bottom top-=" + effectsPadding,
 						scroller: wrapper,
 						scrub: true,
 						refreshPriority: -999, // must update AFTER any other ScrollTrigger pins
@@ -259,8 +314,8 @@ export class ScrollSmoother {
 									}
 									y = startY + extraY + change * (((gsap.utils.clamp(self.start, self.end, scrollY) - self.start - extraY) / (end - self.start)) - progressOffset);
 								}
-								y = _round(y + yOffset);
 								markers.length && !autoSpeed && markers.forEach(setter => setter(y - extraY));
+								y = _round(y + yOffset);
 								if (scrub) {
 									scrub.resetTo("y", y, -delta, true);
 									startupPhase && scrub.progress(1);
@@ -290,7 +345,7 @@ export class ScrollSmoother {
 		this.scrollTop = scrollTop;
 
 		this.scrollTo = (target, smooth, position) => {
-			let p = gsap.utils.clamp(0, ScrollTrigger.maxScroll(_win), isNaN(target) ? this.offset(target, position) : +target);
+			let p = gsap.utils.clamp(0, _maxScroll(), isNaN(target) ? this.offset(target, position) : +target);
 			!smooth ? scrollTop(p) : paused ? gsap.to(this, {duration: smoothDuration, scrollTop: p, overwrite: "auto", ease: _expo}) : scrollFunc(p);
 		};
 
@@ -299,7 +354,9 @@ export class ScrollSmoother {
 			let cssText = target.style.cssText, // because if there's an effect applied, we revert(). We need to restore.
 				st = ScrollTrigger.create({trigger: target, start: position || "top top"}),
 				y;
-			effects && adjustParallaxPosition([st], true);
+			if (effects) {
+				startupPhase ? ScrollTrigger.refresh() : adjustParallaxPosition([st], true); // all the effects need to go through the initial full refresh() so that all the pins and ratios and offsets are set up. That's why we do a full refresh() if it's during the startupPhase.
+			}
 			y = st.start / speed;
 			st.kill(false);
 			target.style.cssText = cssText;
@@ -422,6 +479,9 @@ export class ScrollSmoother {
 				}
 			}),
 			onRefreshInit: self => {
+				if (ScrollSmoother.isRefreshing) { // gets called on the onRefresh() when we do self.setPositions(...) in which case we should skip this
+					return;
+				}
 				ScrollSmoother.isRefreshing = true;
 				if (effects) {
 					let pins = ScrollTrigger.getAll().filter(st => !!st.pin);
@@ -589,11 +649,10 @@ export class ScrollSmoother {
 				_clamp = gsap.utils.clamp;
 				_expo = gsap.parseEase("expo");
 				_context = gsap.core.context || function() {};
-				_onResizeDelayedCall = gsap.delayedCall(0.2, () => ScrollTrigger.isRefreshing || (_mainInstance && _mainInstance.refresh())).pause();
 				ScrollTrigger = gsap.core.globals().ScrollTrigger;
 				gsap.core.globals("ScrollSmoother", ScrollSmoother); // must register the global manually because in Internet Explorer, functions (classes) don't have a "name" property.
-			//	gsap.ticker.lagSmoothing(50, 100); // generally people don't want things to jump (honoring smoothness over time is better with smooth scrolling)
 				if (_body && ScrollTrigger) {
+					_onResizeDelayedCall = gsap.delayedCall(0.2, () => ScrollTrigger.isRefreshing || (_mainInstance && _mainInstance.refresh())).pause();
 					_root = [_win, _doc, _docEl, _body];
 					_getVelocityProp = ScrollTrigger.core._getVelocityProp;
 					_inputObserver = ScrollTrigger.core._inputObserver;
@@ -608,7 +667,7 @@ export class ScrollSmoother {
 
 }
 
-ScrollSmoother.version = "3.11.5";
+ScrollSmoother.version = "3.12.1";
 ScrollSmoother.create = vars => (_mainInstance && vars && _mainInstance.content() === _toArray(vars.content)[0]) ? _mainInstance : new ScrollSmoother(vars);
 ScrollSmoother.get = () => _mainInstance;
 

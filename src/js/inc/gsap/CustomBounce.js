@@ -1,5 +1,5 @@
 /*!
- * CustomBounce 3.11.5
+ * CustomBounce 3.12.1
  * https://greensock.com
  *
  * @license Copyright 2008-2023, GreenSock. All rights reserved.
@@ -146,6 +146,6 @@ export class CustomBounce {
 
 _getGSAP() && gsap.registerPlugin(CustomBounce);
 
-CustomBounce.version = "3.11.5";
+CustomBounce.version = "3.12.1";
 
 export { CustomBounce as default };

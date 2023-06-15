@@ -1,5 +1,5 @@
 /*!
- * VelocityTracker: 3.11.5
+ * VelocityTracker: 3.12.1
  * https://greensock.com
  *
  * Copyright 2008-2023, GreenSock. All rights reserved.

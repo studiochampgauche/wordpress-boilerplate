@@ -1,5 +1,5 @@
 /*!
- * PathEditor 3.11.5
+ * PathEditor 3.12.1
  * https://greensock.com
  *
  * Copyright 2008-2023, GreenSock. All rights reserved.
@@ -738,7 +738,7 @@ export class PathEditor {
 	}
 
 	isSelected() {
-		return (this._selectedAnchors.length > 0);
+		return (this._selectedAnchors.length > 0 || this._selection.style.visibility === "visible");
 	}
 
 	select(allAnchors) {
@@ -1309,7 +1309,7 @@ PathEditor.getSnapFunction = (vars) => { //{gridSize, radius, x, y, width, heigh
 	};
 };
 
-PathEditor.version = "3.11.5";
+PathEditor.version = "3.12.1";
 
 PathEditor.register = _initCore;
 

@@ -1,5 +1,5 @@
 /*!
- * MotionPathHelper 3.11.5
+ * MotionPathHelper 3.12.1
  * https://greensock.com
  *
  * @license Copyright 2008-2023, GreenSock. All rights reserved.
@@ -93,6 +93,7 @@ let gsap, _win, _doc, _docEl, _body, MotionPathPlugin,  _arrayToRawPath, _rawPat
 		_docEl = _doc.documentElement;
 		if (gsap) {
 			MotionPathPlugin = gsap.plugins.motionPath;
+			MotionPathHelper.PathEditor = PathEditor;
 			_context = gsap.core.context || function() {};
 		}
 		if (!MotionPathPlugin) {
@@ -248,6 +249,6 @@ export class MotionPathHelper {
 MotionPathHelper.register = _initCore;
 MotionPathHelper.create = (target, vars) => new MotionPathHelper(target, vars);
 MotionPathHelper.editPath = (path, vars) => PathEditor.create(path, vars);
-MotionPathHelper.version = "3.11.5";
+MotionPathHelper.version = "3.12.1";
 
 export { MotionPathHelper as default };

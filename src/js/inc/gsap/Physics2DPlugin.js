@@ -1,5 +1,5 @@
 /*!
- * Physics2DPlugin 3.11.5
+ * Physics2DPlugin 3.12.1
  * https://greensock.com
  *
  * @license Copyright 2008-2023, GreenSock. All rights reserved.
@@ -47,7 +47,7 @@ class PhysicsProp {
 
 
 export const Physics2DPlugin = {
-	version:"3.11.5",
+	version:"3.12.1",
 	name:"physics2D",
 	register: _initCore,
 	init(target, value, tween) {
