@@ -2375,9 +2375,11 @@ class scg{
 		if(isset($parameters['add_mobile_bars']) && (int)$parameters['add_mobile_bars'] > 0){
 
 			$html = '<div class="ham-menu">';
-			for ($i=0; $i < (int)$parameters['add_mobile_bars']; $i++) { 
-				$html .= '<span></span>';
-			}
+				$html .= '<div class="int">';
+				for ($i=0; $i < (int)$parameters['add_mobile_bars']; $i++) { 
+					$html .= '<span></span>';
+				}
+				$html .= '</div>';
 			$html .= '</div>';
 
 			$parameters['items_wrap'] = $parameters['items_wrap'] . $html;
