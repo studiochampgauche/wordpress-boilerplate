@@ -147,7 +147,7 @@ class PLL_Model {
 			} else {
 				$languages = get_transient( 'pll_languages_list' );
 
-				if ( empty( $languages ) || ! is_array( $languages ) ) {
+				if ( empty( $languages ) || ! is_array( $languages ) || empty( reset( $languages )['term_props'] ) ) { // Test `term_props` in case we got a transient older than 3.4.
 					// Create the languages from taxonomies.
 					$languages = $this->get_languages_from_taxonomies();
 				} else {
@@ -861,7 +861,7 @@ class PLL_Model {
 			return $orderby;
 		}
 
-		return sprintf( 'tt.taxonomy = "language" DESC, %1$s.term_group, %1$s.term_id', $matches['alias'] );
+		return sprintf( 'tt.taxonomy = \'language\' DESC, %1$s.term_group, %1$s.term_id', $matches['alias'] );
 	}
 
 	/**
@@ -978,9 +978,11 @@ class PLL_Model {
 		 *     }
 		 * ) $terms_by_slug
 		 */
-		$languages = array_map(
-			array( new PLL_Language_Factory( $this->options ), 'get_from_terms' ),
-			array_values( $terms_by_slug )
+		$languages = array_filter(
+			array_map(
+				array( new PLL_Language_Factory( $this->options ), 'get_from_terms' ),
+				array_values( $terms_by_slug )
+			)
 		);
 
 		/**
