@@ -1,5 +1,5 @@
 /*!
- * PathEditor 3.12.1
+ * PathEditor 3.12.2
  * https://greensock.com
  *
  * Copyright 2008-2023, GreenSock. All rights reserved.
@@ -1309,7 +1309,7 @@ PathEditor.getSnapFunction = (vars) => { //{gridSize, radius, x, y, width, heigh
 	};
 };
 
-PathEditor.version = "3.12.1";
+PathEditor.version = "3.12.2";
 
 PathEditor.register = _initCore;
 

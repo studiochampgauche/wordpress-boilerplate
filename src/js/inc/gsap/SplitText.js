@@ -1,5 +1,5 @@
 /*!
- * SplitText: 3.12.1
+ * SplitText: 3.12.2
  * https://greensock.com
  *
  * @license Copyright 2008-2023, GreenSock. All rights reserved.
@@ -466,7 +466,7 @@ export class SplitText {
 
 }
 
-SplitText.version = "3.12.1";
+SplitText.version = "3.12.2";
 SplitText.register = _initCore;
 
 export { SplitText as default };
