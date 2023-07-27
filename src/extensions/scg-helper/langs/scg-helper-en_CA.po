@@ -204,3 +204,9 @@ msgstr "Index"
 
 msgid "Barre du haut"
 msgstr "Top Bar"
+
+msgid "Version des fichiers"
+msgstr "Files Version"
+
+msgid "Front-end seulement"
+msgstr "Front-end only"

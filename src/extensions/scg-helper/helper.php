@@ -73,13 +73,13 @@ class scg{
 			/*
 			* Main Style
 			*/
-			wp_enqueue_style('scg-main', get_bloginfo('stylesheet_directory').'/assets/css/main.min.css', null, null, null);
+			wp_enqueue_style('scg-main', get_bloginfo('stylesheet_directory').'/assets/css/main.min.css?v=' . self::field('files_versioning_style'), null, null, null);
 
 
 			/*
 			* Main Javascript
 			*/
-			wp_enqueue_script('scg-main', get_bloginfo('stylesheet_directory') .'/assets/js/main.js', null, null, true);
+			wp_enqueue_script('scg-main', get_bloginfo('stylesheet_directory') .'/assets/js/main.js?v=' . self::field('files_versioning_style'), null, null, true);
 
 		}, 10);
 
@@ -1352,6 +1352,7 @@ class scg{
 				'new_lines' => 'wpautop',
 				'esc_html' => 0,
 			]);
+            
 
 			acf_add_local_field([
 				'parent' => 'group_637141e2601c7',
@@ -1577,7 +1578,7 @@ class scg{
 				'name' => 'top_bar',
 				'aria-label' => '',
 				'type' => 'select',
-				'instructions' => '',
+				'instructions' => __('Front-end seulement', 'scg-helper'),
 				'required' => 0,
 				'conditional_logic' => 0,
 				'wrapper' => [
@@ -1597,6 +1598,68 @@ class scg{
 				'ajax' => 0,
 				'placeholder' => ''
 			]);
+            
+            
+            acf_add_local_field([
+				'parent' => 'group_637141e2601c7',
+				'key' => 'field_6371CACHING259',
+				'label' => __('Version des fichiers', 'scg-helper'),
+				'name' => 'files_versioning',
+				'aria-label' => '',
+				'type' => 'group',
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => 0,
+				'wrapper' => [
+					'width' => '50%',
+					'class' => '',
+					'id' => '',
+				],
+				'layout' => 'table',
+				'sub_fields' => [
+					[
+                        'key' => 'field_CACHING_STYLE_VERSION',
+                        'label' => __('Style', 'scg-helper'),
+                        'name' => 'style',
+                        'aria-label' => '',
+                        'type' => 'text',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => [
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ],
+                        'default_value' => '1.0',
+                        'maxlength' => 10,
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                    ],
+                    [
+                        'key' => 'field_CACHING_JAVASCRIPT_VERSION',
+                        'label' => __('JavaScript', 'scg-helper'),
+                        'name' => 'javascript',
+                        'aria-label' => '',
+                        'type' => 'text',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => [
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ],
+                        'default_value' => '1.0',
+                        'maxlength' => 10,
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                    ]
+				],
+			]);
+            
 
 			if(self::field('seo_management') !== 'disable') {
 
