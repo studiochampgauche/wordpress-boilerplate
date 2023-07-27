@@ -43,7 +43,7 @@ Handle WordPress with ACF. Manage quickly:
 ## Structure has changed
 Yup! But, why?
 
-We normally place the WordPress Production Files in a folder named "site" on the final server for be it clean, but in a recent WordPress Project in Multisites, we have understand that we have no choice to place the WP Files on the root for setup the Multisite throught Subdomains.
+We normally place the WordPress Production Files in a folder named "site" on the final server for do it clean, but in a recent WordPress Project in Multisites, we have understand that we have no choice to place the WP Files on the root for setup the Multisite throught Subdomains.
 
 In parallel, we also needed to create a local, test and production environment as usual, except that this time, our WordPress starter had the WP Production Files in a "dist" directory instead to be on the root and that was a problem because when you try to place a local "dist" file to the Test/Prod Server with a FTP system like the one from DreamWeaver, the directory dist will also be placed too.
 
