@@ -1,3 +1,7 @@
 node_modules/
 dist/
 src/wp-config.php
+src/extensions
+!src/extensions/advanced-custom-fields-pro
+!src/extensions/scg-helper
+!src/extensions/index.php
