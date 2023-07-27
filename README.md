@@ -9,7 +9,6 @@ A WordPress Project that allow us start theming super fast. Work good in Multisi
 
 ## Plugins included
 - ACF Pro
-- Polylang Free
 - Champ Gauche Helper
 
 ## Guide
