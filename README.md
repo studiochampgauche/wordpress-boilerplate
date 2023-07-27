@@ -1,7 +1,7 @@
 # Our WordPress Project
-A WordPress Project that allow us start theming super fast. Work good in Multisite.
+A WordPress Project that allow us start theming super fast.
 
-## Ready to use
+## Ready Libraries
 - Three.js
 - Barba.js
 - Granim.js
@@ -11,28 +11,12 @@ A WordPress Project that allow us start theming super fast. Work good in Multisi
 - ACF Pro
 - Champ Gauche Helper
 
-## Guide
-1. Clone the repo and install the Node Modules (tested with nodeJS 18.9.0, 18.12.0 and 18.16.0)
-
-```
-cd your_project_root_path
-&& git clone https://github.com/studiochampgauche/wordpress-project-starter.git .
-&& npm i
-```
-
-2. In `src` directory, duplicate wp-config-sample.php to wp-config.php and setup it
-
-3. On your project root, add a directory named `dist` and put inner the WordPress production files
-
-4. If is your first time setup, run the command `gulp prod or gulp prod-watch`. If isn't, just run `gulp` command for watching.
-
-5. If you play with the Helper Plugin, you need to activate the required plugin `ACF PRO`
 
 ## Champ Gauche Helper Plugin
-
-We have built this plugin around ACF Pro for fix basic things needed in each project. Manage quickly:
+Handle WordPress with ACF. Manage quickly:
 
 - SEO
+- Cache Busting
 - SVG Acceptance
 - Theme locations
 - Maintenance Mode
@@ -49,13 +33,7 @@ We have built this plugin around ACF Pro for fix basic things needed in each pro
 - Default: French
 - Existing Translations: en_CA, en_US, en_GB
 
-### Static PHP Functions (Documentation is coming soon)
-The plugin provide some PHP functions too. Put a look at the end of file `src/extensions/scg-helper/helper.php`
-
-You can call it like that:
-```
-scg::menu($theme_location, ['add_mobile_bars' => 2]);
-```
-
-## The Theme
-The Theme is built for work with Barba transitions and GSAP ScrollSmoother/ScrollTrigger on start.
+## How it work?
+1. Install your Node Modules in src > built
+2. If is the first setup for your project, run `gulp prod-watch` or `gulp prod`. If not, continue watching by only use `gulp`. You can put a look on the Gulp File for more commands
+3. Start working
