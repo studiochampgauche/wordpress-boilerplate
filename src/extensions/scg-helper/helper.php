@@ -1361,7 +1361,7 @@ class scg{
 				'name' => 'restrict_scg_tab',
 				'aria-label' => '',
 				'type' => 'user',
-				'instructions' => __('Fonctionne seulement si vous avez configurer "Changer l\'apparence du panneau d\'admin" sur "Activer"', 'scg-helper'),
+				'instructions' => __('Fonctionne seulement si vous avez configuré "Changer l\'apparence du panneau d\'admin" sur "Activer"', 'scg-helper'),
 				'required' => 0,
 				'conditional_logic' => 0,
 				'wrapper' => [
