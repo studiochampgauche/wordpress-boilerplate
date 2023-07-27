@@ -79,7 +79,7 @@ class scg{
 			/*
 			* Main Javascript
 			*/
-			wp_enqueue_script('scg-main', get_bloginfo('stylesheet_directory') .'/assets/js/main.js?v=' . self::field('files_versioning_style'), null, null, true);
+			wp_enqueue_script('scg-main', get_bloginfo('stylesheet_directory') .'/assets/js/main.js?v=' . self::field('files_versioning_javascript'), null, null, true);
 
 		}, 10);
 
