@@ -34,6 +34,7 @@ Handle WordPress with ACF. Manage quickly:
 - Existing Translations: en_CA, en_US, en_GB
 
 ## How it work?
-1. Install your Node Modules in src > built
+1. Install your Node Modules in `src > built`
 2. If is the first setup for your project, run `gulp prod-watch` or `gulp prod`. If not, continue watching by only use `gulp`. You can put a look on the Gulp File for more commands
-3. Start working
+3. Put the WordPress Production Files on root
+4. Start working
