@@ -29,7 +29,7 @@ Handle WordPress with ACF. Manage quickly:
 - Scripts before/after opened/closed head/body tags
 - Save ACF in JSON (https://www.advancedcustomfields.com/resources/local-json/)
 
-#### Languages of Helper Plugin
+### Languages of Helper Plugin
 - Default: French
 - Existing Translations: en_CA, en_US, en_GB
 
