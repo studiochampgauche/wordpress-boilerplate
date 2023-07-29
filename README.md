@@ -12,7 +12,7 @@ A WordPress Project that allow us start theming super fast.
 - Champ Gauche Helper
 
 
-## Champ Gauche Helper Plugin
+### About Helper Plugin
 Handle WordPress with ACF. Manage quickly:
 
 - SEO
@@ -29,7 +29,7 @@ Handle WordPress with ACF. Manage quickly:
 - Scripts before/after opened/closed head/body tags
 - Save ACF in JSON (https://www.advancedcustomfields.com/resources/local-json/)
 
-### Languages
+#### Languages of Helper Plugin
 - Default: French
 - Existing Translations: en_CA, en_US, en_GB
 
