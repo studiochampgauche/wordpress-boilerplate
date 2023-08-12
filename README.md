@@ -9,6 +9,7 @@ A WordPress Project that allow us start theming super fast.
 5. Start working
 
 ## Ready Libraries
+- Pixi.js
 - Three.js
 - Barba.js
 - Granim.js
