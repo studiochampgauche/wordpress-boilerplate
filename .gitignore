@@ -1,6 +1,6 @@
 wp-*
 .htaccess
-index.php
+/index.php
 xmlrpc.php
 readme.html
 license.txt
