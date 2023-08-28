@@ -2,7 +2,7 @@
 /*
 Plugin Name: Champ Gauche Helper
 Description: WordPress Handler
-Version: 1.0.1
+Version: 2.0.0
 Author: Studio Champ Gauche
 Author URI: https://champgauche.studio
 Copyright: Studio Champ Gauche
@@ -79,7 +79,7 @@ class scg{
 			/*
 			* Main Javascript
 			*/
-			wp_enqueue_script('scg-main', get_bloginfo('stylesheet_directory') .'/assets/js/main.js?v=' . self::field('files_versioning_javascript'), null, null, true);
+			wp_enqueue_script('scg-main', get_bloginfo('stylesheet_directory') .'/assets/js/App.js?v=' . self::field('files_versioning_javascript'), null, null, true);
 
 		}, 10);
 

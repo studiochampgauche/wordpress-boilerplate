@@ -1,76 +1,36 @@
 'use strict';
-import gsap from './gsap/index.js';
-import gsapCore from './gsap/gsap-core.js';
-import ScrollTrigger from './gsap/ScrollTrigger.js';
-import ScrollSmoother from './gsap/ScrollSmoother.js';
+import Loader from './Loader.js';
+import PageScroller from './PageScroller.js';
+import PageTransitor from './PageTransitor.js';
 
 
-export default class App{
+class App{
+    
+    constructor(){
+        
+        window.scrollTo(0,0);
 
-	onBeforeOnce(){
-		console.log('onBeforeOnce');
-		this.scroller();
-	}
+		if ('scrollRestoration' in history)
+			history.scrollRestoration = 'manual';
 
-	onOnce(container, namespace){
-		console.log('onOnce');
-	}
+		const isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
+		const isEdge = /Edge/.test(navigator.userAgent);
 
+		if(isIE11 || isEdge)
+			setTimeout(function(){ window.scrollTo(0, 0); }, 300);
+		
 
-	onLeave(container, namespace, done){
-
-		console.log('is leaving');
-
-		const tl = gsap.timeline({
-			onComplete: () => done()
-		});
-
-		tl.to(container, .4, {
-			opacity: 0
-		});
-
-
-		return tl;
-	}
-
-	onAfterLeave(){
-		this.gscroll.paused(true);
-		this.gscroll.scrollTop(0);
-		ScrollTrigger.refresh();
-		ScrollTrigger.getAll().forEach(t => t.kill());
-	}
-
-	onEnter(container, namespace){
-
-		console.log('is entering');
-
-		const tl = gsap.timeline();
-
-		tl.fromTo(container, {
-			opacity: 0
-		}, {
-			opacity: 1,
-			duration: .4
-		});
-
-
-		return tl;
-	}
-
-	onAfterEnter(){
-		this.gscroll.paused(false);
-	}
-
-	scroller(){
-
-		gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
-
-		this.gscroll = ScrollSmoother.create({
-			wrapper: '#pageWrapper',
-			content: '#pageContent',
-			ignoreMobileResize: true,
-			smooth: 1
-		});
-
-	}
+		window.onload = async () => {
+            
+            await new Loader();
+            
+            this.gscroll = new PageScroller();
+            
+            new PageTransitor(this.gscroll);
+        }
+        
+    }
+    
 }
+
+new App();
