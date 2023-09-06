@@ -8,7 +8,14 @@ export default class Loader{
         
         return new Promise(done => {
             
+            /*
+            * Fake preloader based on GSAP
+            */
             gsap.delayedCall(1.2, () => done());
+            
+            /*
+            * But you can stop faking and preload your assets here 💪
+            */
             
         });
         
