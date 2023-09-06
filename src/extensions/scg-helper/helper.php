@@ -1999,7 +1999,7 @@ class scg{
 					'max_width' => 1200,
 					'max_height' => 630,
 					'max_size' => '',
-					'mime_types' => '.jpg,.jpg',
+					'mime_types' => '.jpg,.png',
 					'preview_size' => 'full',
 				]);
 			}
