@@ -1,5 +1,5 @@
 # Our WordPress Project
-Build immersive 2D or 3D WordPress themes Awwwards in "no time" that your clients can manage with ACF.
+Build immersive 2D or 3D WordPress themes Awwwards in "no time" with our Boilerplate that your clients can manage with ACF.
 
 
 ## Guide
