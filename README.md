@@ -6,7 +6,7 @@ Build immersive 2D or 3D WordPress themes Awwwards in "no time" that your client
 1. Put the WordPress Production Files on root
 2. Install your Node Modules in `src > built`
 3. In `src` directory, duplicate `wp-config-sample.php` to `wp-config.php` and setup it
-4. If is the first setup for your project, run `gulp prod-watch` or `gulp prod` in `src > built`. If not, continue watching by only use `gulp`. You can put a look on the Gulp File for more commands. Like if you want add some Images from files, you can use `gulp images` for compress and send your assets in WP Production Files. Same for fonts, use `gulp fonts`.
+4. If is the first setup for your project, run `gulp prod-watch` or `gulp prod` in `src > built`. If not, continue watching by only use `gulp`. You can put a look on the Gulp File for more commands. Like if you want add some Images from files, you can use `gulp images` for compress and send your assets in your theme in the WP Production Files. Same for fonts, use `gulp fonts`.
 5. Start working
 
 
