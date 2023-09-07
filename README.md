@@ -20,7 +20,7 @@ Build immersive 2D or 3D WordPress themes in "no time" that your clients can man
 
 ## Plugins included
 - ACF Pro
-- Champ Gauche Helper (old version from 2016 but updated some times, we'll launch a new 2023 plugin soon)
+- Champ Gauche Helper (old version from 2016 but updated sometimes, we'll launch a new 2023 plugin soon)
 
 
 ## JavaScript Lifecyle
