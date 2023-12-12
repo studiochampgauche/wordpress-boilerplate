@@ -1,5 +1,5 @@
 > [!IMPORTANT]  
-> Version 3 is arriving quietly and will work if you download it, put a look on the v3 branch and [project](https://github.com/users/studiochampgauche/projects/1).
+> Version 3 is arriving quietly and will work if you download it on v3 branch. Put a look on [project](https://github.com/users/studiochampgauche/projects/1) if you want follow the progress.
 
 
 # Our WordPress Project
