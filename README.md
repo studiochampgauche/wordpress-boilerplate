@@ -1,3 +1,7 @@
+> [!IMPORTANT]  
+> Version 3 is arriving quietly and will work if you download it, put a look on the v3 branch and [project](https://github.com/users/studiochampgauche/projects/1).
+
+
 # Our WordPress Project
 Build immersive 2D or 3D WordPress themes Awwwards in "no time" with our Boilerplate that your clients can manage with ACF.
 
