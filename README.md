@@ -2,7 +2,8 @@
 > Version 3 is arriving quietly and will work if you download it on v3 branch. Put a look on [project](https://github.com/users/studiochampgauche/projects/1) if you want follow the progress.
 >
 > ### Change log
-> We push some functions in the functions.php of v3 branch without make sure that the theme will not crash if the StudioChampGauche class is not found. It's now fixed.
+> - We push some functions in the functions.php of v3 branch without make sure that the theme will not crash if the StudioChampGauche class is not found. It's now fixed.
+> - We condition the code with is_tag() and is_category(), but we forgot is_tax(). Fixed.
 
 
 # Our WordPress Project
