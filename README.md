@@ -4,6 +4,8 @@
 > ### Change log since v3 is ready
 > - We push some functions in the functions.php of v3 branch without make sure that the theme will not crash if the StudioChampGauche class is not found. It's now fixed.
 > - We condition the code with is_tag() and is_category(), but we forgot is_tax(). Fixed.
+> - When you play with `StudioChampGauche\Utils\Field::replace` and you have an array returned from `StudioChampGauche\Utils\Field::get()` or `scg::field()`, the site crash. Fixed.
+> - Add recursive replacements on array from scg::field()
 
 
 # Our WordPress Project
