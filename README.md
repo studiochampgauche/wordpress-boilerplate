@@ -6,7 +6,7 @@
 > - We condition the code with is_tag() and is_category(), but we forgot is_tax(). Fixed.
 > - When you play with `StudioChampGauche\Utils\Field::replace` and you have an array returned from `StudioChampGauche\Utils\Field::get()` or `scg::field()`, the site crash. Fixed.
 > - Add recursive replacements on array returned from scg::field(). Fixed.
-> - For All Utils Classes (but not for Field), when you use $args from ::get($args) or scg::className($args), defaults are forced. Fixed.
+> - For All Utils Classes (but not for the "Field" Class), when you use $args from ::get($args) or scg::className($args), defaults are forced. Fixed.
 
 
 # Our WordPress Project
