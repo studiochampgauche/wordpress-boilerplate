@@ -1,3 +1,9 @@
+> [!CAUTION]  
+> Don't use our node modules online. Only locally for run Gulp.
+>
+> For this repo and v3 repo.
+
+
 > [!IMPORTANT]  
 > Version 3 is arriving quietly and will work if you download it from v3 branch. Put a look on [project](https://github.com/users/studiochampgauche/projects/1) if you want follow the progress.
 >
