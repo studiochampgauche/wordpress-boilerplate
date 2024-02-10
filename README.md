@@ -8,7 +8,7 @@
 > - Add recursive replacements on array returned from scg::field(). Fixed.
 > - For All Utils Classes (but not for the "Field" Class), when you use $args from `::get($args)` or `scg::methodName($args)`, defaults are forced for the next uses. Fixed.
 > - Repair `post_per_page` parameter in `StudioChampGauche\Utils\CustomPostType::default('post_per_page', -1)` to `posts_per_page` from functions File. Fixed.
-> - Remove default post/pages c6bf814
+> - Default post/pages are now deleted when you load WP for the first time.
 
 
 # Our WordPress Project
