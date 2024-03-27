@@ -9,8 +9,8 @@
 > - For All Utils Classes (but not for the "Field" Class), when you use $args from `::get($args)` or `scg::methodName($args)`, defaults are forced for the next uses. Fixed.
 > - Repair `post_per_page` parameter in `StudioChampGauche\Utils\CustomPostType::default('post_per_page', -1)` to `posts_per_page` from functions File. Fixed.
 > - Default post/pages are now deleted when you load WP for the first time.
-> - Change to window.gscroll instead of this.gscroll for spread Scroller globally
-> - Add DOCS.md File
+> - Correction of how Scroller is spread Globally: We start using window.gscroll instead of this.gscroll
+> - DOCS.md File added
 
 
 # Our WordPress Project
